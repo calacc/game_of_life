@@ -44,8 +44,6 @@ public class GameOfLifeApplication {
     {
 
     }
-    public static void main(String[] args)
-    {
 
     // Swaggger url: http://localhost:8080/swagger-ui/index.html#/
     public static void main(String[] args) {
