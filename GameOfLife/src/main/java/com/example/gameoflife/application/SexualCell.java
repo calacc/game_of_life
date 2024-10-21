@@ -1,4 +1,4 @@
-package com.example.gameoflife;
+package com.example.gameoflife.application;
 
 public class SexualCell extends Cell{
     public SexualCell(int id, int x, int y) {
