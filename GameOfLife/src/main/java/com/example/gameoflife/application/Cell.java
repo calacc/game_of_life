@@ -1,4 +1,4 @@
-package com.example.gameoflife;
+package com.example.gameoflife.application;
 
 public abstract class Cell {
     protected int ID;

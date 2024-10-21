@@ -1,4 +1,4 @@
-package com.example.gameoflife;
+package com.example.gameoflife.application;
 
 public class AsexualCell extends Cell {
     public AsexualCell(int id, int x, int y) {

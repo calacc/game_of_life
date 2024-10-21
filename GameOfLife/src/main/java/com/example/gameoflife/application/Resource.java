@@ -1,4 +1,4 @@
-package com.example.gameoflife;
+package com.example.gameoflife.application;
 
 public class Resource {
     private int ID;
