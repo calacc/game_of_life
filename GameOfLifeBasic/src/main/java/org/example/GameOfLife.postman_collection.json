@@ -1,0 +1,67 @@
+{
+	"info": {
+		"_postman_id": "2e8a054c-42b2-4c5e-a8ab-1b8845301144",
+		"name": "GameOfLife",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29569210"
+	},
+	"item": [
+		{
+			"name": "startGameOfLife",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/startGameOfLife",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"startGameOfLife"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "stopGameOfLife",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/stopGameOfLife",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"stopGameOfLife"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createGameOfLife",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/createGameOfLife",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"createGameOfLife"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
