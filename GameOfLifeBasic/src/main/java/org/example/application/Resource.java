@@ -2,8 +2,8 @@ package org.example.application;
 
 public class Resource {
     private int ID;
-    private int row;
-    private int col;
+    public int row;
+    public int col;
 
     public Resource(int ID, int row, int col) {
         this.ID = ID;
