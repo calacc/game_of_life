@@ -11,47 +11,85 @@ public abstract class Cell {
     protected int T_Full;
     protected State state;
     protected int foodEaten;
+    protected GameOfLife gameServer;
 
-    protected int foodRequest(Resource resource)
+    protected boolean foodRequest()
     {
-        return 0;
+        return gameServer.FeedCell(x, y);
     }
-    protected void dieRequest() {
-
+    protected boolean dieRequest() {
+        return gameServer.KillCell(x, y);
     }
-    protected void moveRequest(int x, int y)
+    protected void moveRequest()
     {
-
+        int[] updatedPosition = new int[2];
+        updatedPosition = gameServer.MoveCell(x, y);
+        x = updatedPosition[0];
+        y = updatedPosition[1];
+        System.out.println("Cell moved to position: [" + x + "][" + y +"]");
     }
-    public Cell(int id, int x, int y)
+
+    protected abstract void reproduceRequest();
+
+    public Cell(int id, int x, int y, GameOfLife gameOfLifeServer)
     {
         this.ID = id;
-        this.x=x;
-        this.y=y;
+        this.x = x;
+        this.y = y;
+        this.gameServer = gameOfLifeServer;
 
-        //trebuie sa ne decidem daca t_full si t_starve sunt la fel la toate celulele sau sunt personalizate
-        this.T_Full = (new Random()).nextInt()%10;
-        this.T_Starve = (new Random()).nextInt()%10;
+        /*TBD if T_starve and T_full are equal for every cell or personalized*/
+        this.T_Full = (new Random()).nextInt() % 10;
+        this.T_Starve = (new Random()).nextInt() % 10;
         this.foodEaten = 0;
         this.state = State.HUNGRY;
-
-        run();
     }
     public void run() {
         int time_counter = 0;
-        while(true) // mai degraba while alive
+        /*while cell is alive*/
+        while(true && gameServer.started)
         {
-            //evaluate state -> request from server in functie de state
-
+            moveRequest();
             time_counter++;
+            /*evaluate state of cell*/
+            switch(state)
+            {
+                case HUNGRY:
+                {
+                    if(foodRequest())
+                    {
+                        foodEaten++;
+                        state = State.FULL;
+                        time_counter = 0;
+                    }
+                    else
+                    {
+                        if(time_counter == T_Starve)
+                        {
+                            if(dieRequest());
+                                break;
+                        }
+                    }
+                }
+                case FULL: {
+                    if (time_counter == T_Full) {
+                        time_counter = 0;
+                        state = State.HUNGRY;
+                    }
+                }
+            }
+            if(foodEaten >= 10)
+            {
+                /*if multiply request successful -> getting hungry again*/
+                state = State.HUNGRY;
+            }
             try {
                 TimeUnit.SECONDS.sleep(1);
             }
             catch(Exception e)
             {
-                System.out.println("nu inteleg de ce sleep necesita try catch - daca stiti cum se evita asta feel free to modify");
+                System.out.println("thread.sleep was not successful");
             }
         }
     }
-    protected abstract void reproduceRequest();
 }

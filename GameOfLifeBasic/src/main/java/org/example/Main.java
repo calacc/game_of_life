@@ -73,7 +73,7 @@ class ClientHandler implements Runnable {
                     if (method.equals("GET")) {
                         switch (endpoint) {
                             case "/getState":
-                                if(this.gameOfLifeService.isGameOfLifeCreated()) {
+                                if (this.gameOfLifeService.isGameOfLifeCreated()) {
                                     GameOfLife gameOfLife = this.gameOfLifeService.getGameOfLife();
                                     respondJson(out, 200, gameOfLife);
                                 } else {
@@ -81,36 +81,34 @@ class ClientHandler implements Runnable {
                                     respond(out, 404, message);
                                 }
                         }
-                    }
-                    else if(method.equals("PUT")) {
-                       switch (endpoint) {
-                           case "/startGameOfLife":
-                               if(this.gameOfLifeService.isGameOfLifeCreated()) {
-                                   // Run startGameOfLife in a separate thread
-                                   new Thread(() -> this.gameOfLifeService.startGameOfLife()).start();
-                                   message = "Game of life has been started";
-                                   respond(out, 200, message);
-                               } else {
-                                   message = "Game of life does not exist -> please create a new game";
-                                   respond(out, 404, message);
-                               }
-                               break;
-                           case "/stopGameOfLife":
-                               if(this.gameOfLifeService.isGameOfLifeCreated()) {
-                                   this.gameOfLifeService.stopGameOfLife();
-                                   message = "Game of life has been stopped";
-                                   respond(out, 200, message);
-                               } else {
-                                   message = "Game of life does not exist -> please create a new game";
-                                   respond(out, 404, message);
-                               }
-                               break;
-                       }
-                    }
-                    else if(method.equals("POST")) {
+                    } else if (method.equals("PUT")) {
+                        switch (endpoint) {
+                            case "/startGameOfLife":
+                                if (this.gameOfLifeService.isGameOfLifeCreated()) {
+                                    // Run startGameOfLife in a separate thread
+                                    new Thread(() -> this.gameOfLifeService.startGameOfLife()).start();
+                                    message = "Game of life has been started";
+                                    respond(out, 200, message);
+                                } else {
+                                    message = "Game of life does not exist -> please create a new game";
+                                    respond(out, 404, message);
+                                }
+                                break;
+                            case "/stopGameOfLife":
+                                if (this.gameOfLifeService.isGameOfLifeCreated()) {
+                                    this.gameOfLifeService.stopGameOfLife();
+                                    message = "Game of life has been stopped";
+                                    respond(out, 200, message);
+                                } else {
+                                    message = "Game of life does not exist -> please create a new game";
+                                    respond(out, 404, message);
+                                }
+                                break;
+                        }
+                    } else if (method.equals("POST")) {
                         switch (endpoint) {
                             case "/createGameOfLife":
-                                if(this.gameOfLifeService.isGameOfLifeCreated()) {
+                                if (this.gameOfLifeService.isGameOfLifeCreated()) {
                                     message = "Game of life already exists";
                                     respond(out, 400, message);
                                 } else {
@@ -120,8 +118,7 @@ class ClientHandler implements Runnable {
                                 }
 
                         }
-                    }
-                    else {
+                    } else {
                         respond(out, 405, "Method Not Allowed");
                     }
                 }
@@ -145,6 +142,7 @@ class ClientHandler implements Runnable {
         out.println();
         out.println(message);
     }
+
     private void respondJson(PrintWriter out, int statusCode, Object responseObject) {
         String statusText = (statusCode == 200) ? "OK" : (statusCode == 404) ? "Not Found" : "Method Not Allowed";
 
