@@ -4,32 +4,30 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class GameOfLife {
-    private boolean started = false;
-    protected int startingNrCells=10, startingNrResources=10, mapSize=20;
+    protected boolean started = false;
+    protected int startingNrCells = 2, startingNrResources = 10, mapSize = 5;
     protected ArrayList<Cell> cells;
     protected ArrayList<Resource> resources;
-    protected int cellsMap[][], resourcesMap[][];
-    public GameOfLife()
-    {
+    protected int[][] cellsMap, resourcesMap;
+
+    public GameOfLife() {
         Random random = new Random();
         cells = new ArrayList<>();
         resources = new ArrayList<>();
-        cellsMap = new int[mapSize+5][mapSize+5];
-        resourcesMap = new int[mapSize+5][mapSize+5];
+        cellsMap = new int[mapSize + 5][mapSize + 5];
+        resourcesMap = new int[mapSize + 5][mapSize + 5];
 
-        for(int i=0; i<startingNrCells/2; ++i)
-        {
-            Cell newSCell = new SexualCell(i*2,Math.abs(random.nextInt()%mapSize), Math.abs(random.nextInt()%mapSize));
+        for (int i = 0; i < startingNrCells / 2; ++i) {
+            Cell newSCell = new SexualCell(i * 2, Math.abs(random.nextInt() % mapSize), Math.abs(random.nextInt() % mapSize), this);
             new Thread(() -> cells.add(newSCell)).start();
             cellsMap[newSCell.x][newSCell.y] = 1;
 
-            Cell newACell = new AsexualCell(i*2+1,Math.abs(random.nextInt()%mapSize), Math.abs(random.nextInt()%mapSize));
+            Cell newACell = new AsexualCell(i * 2 + 1, Math.abs(random.nextInt() % mapSize), Math.abs(random.nextInt() % mapSize), this);
             new Thread(() -> cells.add(newACell)).start();
             cellsMap[newACell.x][newACell.y] = 1;
         }
-        for(int i=0; i<startingNrResources; ++i)
-        {
-            Resource resource = new Resource(i,Math.abs(random.nextInt()%mapSize), Math.abs(random.nextInt()%mapSize)   );
+        for (int i = 0; i < startingNrResources; ++i) {
+            Resource resource = new Resource(i, Math.abs(random.nextInt() % mapSize), Math.abs(random.nextInt() % mapSize));
             resources.add(resource);
             resourcesMap[resource.row][resource.col] = 1;
         }
@@ -42,25 +40,26 @@ public class GameOfLife {
         System.out.println();
 
         System.out.println("Cells map:");
-        for(int i=0; i<mapSize; ++i)
-        {
-            for(int j=0; j<mapSize; ++j)
+        for (int i = 0; i < mapSize; ++i) {
+            for (int j = 0; j < mapSize; ++j)
                 System.out.print(cellsMap[i][j]);
-            System.out.println("");
+            System.out.println();
         }
         System.out.println("Resources map:");
-        for(int i=0; i<mapSize; ++i)
-        {
-            for(int j=0; j<mapSize; ++j)
+        for (int i = 0; i < mapSize; ++i) {
+            for (int j = 0; j < mapSize; ++j)
                 System.out.print(resourcesMap[i][j]);
-            System.out.println("");
+            System.out.println();
         }
     }
+
     public void startGame() {
         System.out.println("Game of life started");
         this.started = true;
-        while(this.started) {
-            // IN WHILE-UL ASTA MERGE JOCU CUM AR VENI
+        for (int i = 0; i < startingNrCells; ++i) {
+            cells.get(i).run();
+        }
+        while (this.started) {
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
@@ -70,23 +69,53 @@ public class GameOfLife {
         }
         System.out.println("Game of life stopped");
     }
+
     public void stopGame() {
         this.started = false;
     }
-    public synchronized void FeedCell()
-    {
-        System.out.println("Feeding cell");
+
+    public synchronized boolean FeedCell(int x, int y) {
+        if (resourcesMap[x][y] == 1) {
+            System.out.println("Feeding cell");
+            resourcesMap[x][y] = 0;
+            return true;
+        } else {
+            return false;
+        }
     }
-    public void KillCell()
-    {
+
+    public boolean KillCell(int x, int y) {
         System.out.println("Killing cell");
+        Random random = new Random();
+        cellsMap[x][y] = 0;
+        for (int i = 0; i < random.nextInt() % 5; ++i) {
+            Resource resource = new Resource(i, Math.abs(random.nextInt() % mapSize), Math.abs(random.nextInt() % mapSize));
+            resources.add(resource);
+            resourcesMap[resource.row][resource.col] = 1;
+        }
+        return true;
     }
-    public synchronized void ReproduceCell()
-    {
+
+    public synchronized void ReproduceCell() {
         System.out.println("Reproducing cell");
     }
-    public synchronized void MoveCell()
-    {
-        System.out.println("Moving cell");
+
+    public synchronized int[] MoveCell(int x, int y) {
+        int[] position = new int[2];
+        Random random = new Random();
+        int newX = random.nextInt() % 2, newY = random.nextInt() % 2;
+
+        cellsMap[x][y] = 0;
+        System.out.println("Moving cell from position: [" + x + "][" + y +"]");
+        while(x + newX >= mapSize || x + newX < 0 || y + newY >= mapSize || y + newY < 0) {
+            newX = random.nextInt() % 2;
+            newY = random.nextInt() % 2;
+        }
+        x = x + newX;
+        y = y + newY;
+        cellsMap[x][y] = 1;
+        position[0] = x;
+        position[1] = y;
+        return position;
     }
 }
