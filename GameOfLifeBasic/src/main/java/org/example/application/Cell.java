@@ -28,7 +28,7 @@ public abstract class Cell implements Runnable{
         updatedPosition = gameServer.MoveCell(x, y);
         x = updatedPosition[0];
         y = updatedPosition[1];
-        System.out.println("Cell with id " + ID + " moved to position: [" + x + "][" + y +"]");
+//        System.out.println("Cell with id " + ID + " moved to position: [" + x + "][" + y +"]");
     }
 
     protected abstract void reproduceRequest();
@@ -41,8 +41,12 @@ public abstract class Cell implements Runnable{
         this.gameServer = gameOfLifeServer;
 
         /*TBD if T_starve and T_full are equal for every cell or personalized*/
-        this.T_Full = (new Random()).nextInt() % 10;
-        this.T_Starve = (new Random()).nextInt() % 10;
+        /*
+            Le las pe amandoua 20. Se mai intampla sa imi dea un numar gen 1 sau 2 daca le las random si moare pana apuca sa faca ceva
+            20 e destul cat sa nu moara si sa se mai intalneasca intre ele
+         */
+        this.T_Full = 20;
+        this.T_Starve = 20;
         this.foodEaten = 0;
         this.state = State.HUNGRY;
     }
@@ -68,23 +72,25 @@ public abstract class Cell implements Runnable{
                     {
                         if(time_counter == T_Starve)
                         {
-                            if(dieRequest()) break;
+                            if(dieRequest()) return;
                         }
                     }
+
+                    break;
                 }
                 case FULL: {
                     if (time_counter == T_Full) {
                         time_counter = 0;
                         state = State.HUNGRY;
                     }
+
+                    break;
                 }
             }
             if(foodEaten >= 10)
             {
                 /*if multiply request successful -> getting hungry again*/
                 reproduceRequest();
-                state = State.HUNGRY;
-                foodEaten = 0;
             }
             try {
                 TimeUnit.SECONDS.sleep(1);

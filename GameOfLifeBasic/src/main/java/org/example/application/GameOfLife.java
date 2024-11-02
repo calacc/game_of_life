@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class GameOfLife {
     protected boolean started = false;
-    protected int startingNrCells = 2, startingNrResources = 15, mapSize = 5;
+    protected int startingNrCells = 2, startingNrResources = 15, mapSize = 4;
     protected ArrayList<Cell> cells;
     protected ArrayList<Resource> resources;
     protected int[][] cellsMap, resourcesMap;
@@ -18,13 +18,17 @@ public class GameOfLife {
         resourcesMap = new int[mapSize + 5][mapSize + 5];
 
         for (int i = 0; i < startingNrCells / 2; ++i) {
-//            Cell newSCell = new SexualCell(i * 2, Math.abs(random.nextInt() % mapSize), Math.abs(random.nextInt() % mapSize), this);
-//            cells.add(newSCell);
-//            cellsMap[newSCell.x][newSCell.y] = 1;
+            Cell newSCell1 = new SexualCell(i * 2, Math.abs(random.nextInt() % mapSize), Math.abs(random.nextInt() % mapSize), this);
+            cells.add(newSCell1);
+            cellsMap[newSCell1.x][newSCell1.y] = 1;
 
-            Cell newACell = new AsexualCell(i * 2 + 1, Math.abs(random.nextInt() % mapSize), Math.abs(random.nextInt() % mapSize), this);
-            cells.add(newACell);
-            cellsMap[newACell.x][newACell.y] = 1;
+            Cell newSCell2 = new SexualCell(i * 2 + 1, Math.abs(random.nextInt() % mapSize), Math.abs(random.nextInt() % mapSize), this);
+            cells.add(newSCell2);
+            cellsMap[newSCell2.x][newSCell2.y] = 1;
+
+            Cell newSCell3 = new SexualCell(i * 2 + 2, Math.abs(random.nextInt() % mapSize), Math.abs(random.nextInt() % mapSize), this);
+            cells.add(newSCell3);
+            cellsMap[newSCell3.x][newSCell3.y] = 1;
         }
 
         for (int i = 0; i < startingNrResources; ++i) {
