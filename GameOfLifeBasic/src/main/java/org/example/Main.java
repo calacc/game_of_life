@@ -80,6 +80,7 @@ class ClientHandler implements Runnable {
                                     message = "Game of life does not exist -> please create a new game";
                                     respond(out, 404, message);
                                 }
+                                break;
                         }
                     } else if (method.equals("PUT")) {
                         switch (endpoint) {
