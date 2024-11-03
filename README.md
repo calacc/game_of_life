@@ -13,7 +13,7 @@ Behind the scenes, each cell runs on its own thread and sends requests to the ce
 
 ## Project structure
 
-![Class Diagram](https://github.com/calacc/game_of_life/blob/main/docs/diagram.png)
+![Class Diagram](docs/diagram.png)
 
 ## Concurrency problems
 
