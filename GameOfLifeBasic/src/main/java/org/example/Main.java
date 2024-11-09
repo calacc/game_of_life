@@ -2,6 +2,7 @@ package org.example;
 
 import com.google.gson.Gson;
 import org.example.application.GameOfLife;
+import org.example.application.GameState;
 import org.example.services.GameOfLifeService;
 
 import java.io.*;
@@ -16,20 +17,14 @@ public class Main {
     public static void main(String[] args) {
         // Port number where the server will listen
         int port = 8080;
-
-        // Thread pool for handling client requests concurrently
         ExecutorService threadPool = Executors.newFixedThreadPool(10);
 
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("Server is listening on port " + port);
 
-            // Continuously listen for incoming connections
             while (true) {
-                // Accept client connection
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("New client connected");
-
-                // Handle client request in a separate thread
                 threadPool.execute(new ClientHandler(clientSocket, gameOfLifeService));
             }
         } catch (IOException e) {
@@ -39,7 +34,6 @@ public class Main {
     }
 }
 
-// ClientHandler class to handle client requests
 class ClientHandler implements Runnable {
     private final Socket clientSocket;
     private final GameOfLifeService gameOfLifeService;
@@ -57,7 +51,6 @@ class ClientHandler implements Runnable {
                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)
         ) {
-            // Read the client request
             String request = in.readLine();
             String message;
             if (request != null) {
@@ -75,7 +68,8 @@ class ClientHandler implements Runnable {
                             case "/getState":
                                 if (this.gameOfLifeService.isGameOfLifeCreated()) {
                                     GameOfLife gameOfLife = this.gameOfLifeService.getGameOfLife();
-                                    respondJson(out, 200, gameOfLife);
+                                    respondJson(out, 200, gameOfLife.getState());
+                                    respond(out, 200, "state");
                                 } else {
                                     message = "Game of life does not exist -> please create a new game";
                                     respond(out, 404, message);
@@ -133,7 +127,6 @@ class ClientHandler implements Runnable {
         }
     }
 
-    // Respond to the client with an HTTP-like response
     private void respond(PrintWriter out, int statusCode, String message) {
         String statusText = (statusCode == 200) ? "OK" : (statusCode == 404) ? "Not Found" : "Method Not Allowed";
 
@@ -147,7 +140,6 @@ class ClientHandler implements Runnable {
     private void respondJson(PrintWriter out, int statusCode, Object responseObject) {
         String statusText = (statusCode == 200) ? "OK" : (statusCode == 404) ? "Not Found" : "Method Not Allowed";
 
-        // Serialize the object to JSON
         String jsonResponse = gson.toJson(responseObject);
 
         out.println("HTTP/1.1 " + statusCode + " " + statusText);

@@ -10,6 +10,21 @@ public class GameOfLife {
     protected ArrayList<Resource> resources;
     protected int[][] cellsMap, resourcesMap;
 
+    public GameState getState() {
+        GameState state = new GameState();
+        state.map = this.cellsMap;
+        state.started = this.started;
+        state.cells = this.cells.size();
+        state.resources = this.resources.size();
+        state.activeCells = this.cells.stream().map(c -> {
+            CellState cellState = new CellState();
+            cellState.x = c.x;
+            cellState.y = c.y;
+            return cellState;
+        }).toArray(CellState[]::new);
+        return state;
+    }
+
     public GameOfLife() {
         Random random = new Random();
         cells = new ArrayList<>();
