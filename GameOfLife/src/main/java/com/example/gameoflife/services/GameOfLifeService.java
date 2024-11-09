@@ -6,23 +6,35 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class GameOfLifeService {
-    private GameOfLife gameOfLife = new GameOfLife();
-    public GameOfLifeService() {}
+    private GameOfLife gameOfLife;
 
-    public void FeedCell()
-    {
-        this.gameOfLife.FeedCell();
+    public GameOfLife createGameOfLife() {
+        if (this.gameOfLife == null) {
+            this.gameOfLife = new GameOfLife();
+        }
+        return this.gameOfLife;
     }
-    public void KillCell()
-    {
-        this.gameOfLife.KillCell();
+
+    public void startGameOfLife() {
+        if (this.gameOfLife != null) {
+            gameOfLife.startGame();
+        }
     }
-    public void ReproduceCell()
-    {
-        this.gameOfLife.ReproduceCell();
+    public void stopGameOfLife() {
+        if (this.gameOfLife != null) {
+            gameOfLife.stopGame();
+        }
     }
-    public void MoveCell()
-    {
-        this.gameOfLife.MoveCell();
+
+    public void resetGameOfLife() {
+        this.gameOfLife = null;
+    }
+
+    public boolean isGameOfLifeCreated() {
+        return this.gameOfLife != null;
+    }
+
+    public GameOfLife getGameOfLife() {
+        return this.gameOfLife;
     }
 }
