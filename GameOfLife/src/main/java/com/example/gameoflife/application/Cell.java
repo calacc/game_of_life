@@ -1,8 +1,16 @@
 package com.example.gameoflife.application;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
+
 import java.util.concurrent.TimeUnit;
 
+@MappedSuperclass
 public abstract class Cell implements Runnable{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int ID;
     protected int x;
     protected int y;
@@ -11,6 +19,10 @@ public abstract class Cell implements Runnable{
     protected State state;
     protected int foodEaten;
     protected GameOfLife gameServer;
+
+    public Cell() {
+
+    }
 
     protected synchronized boolean foodRequest()
     {

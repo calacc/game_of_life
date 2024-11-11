@@ -1,8 +1,14 @@
 package com.example.gameoflife.application;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+@Entity
 public class AsexualCell extends Cell {
     public AsexualCell(int id, int x, int y, GameOfLife server) {
         super(id, x, y, server);
+    }
+
+    protected AsexualCell() {
+        super();
     }
 
     @Override
