@@ -1,14 +1,29 @@
 package com.example.gameoflife.application;
 
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class GameOfLife {
+
+    private Long id;
     protected boolean started = false;
-    protected int startingNrCells = 2, startingNrResources = 15, mapSize = 4;
-    protected ArrayList<Cell> cells;
-    protected ArrayList<Resource> resources;
-    protected int[][] cellsMap, resourcesMap;
+    protected int startingNrCells = 2;
+    protected int startingNrResources = 15;
+    protected int mapSize = 4;
+
+
+    protected List<Cell> cells = new ArrayList<>();
+
+    protected List<Resource> resources = new ArrayList<>();
+
+    // Assuming cellsMap and resourcesMap are not stored directly in the database;
+    // they might need to be generated on each game load if required.
+    protected int[][] cellsMap;
+
+    protected int[][] resourcesMap;
 
     public GameState getState() {
         GameState state = new GameState();
@@ -142,5 +157,77 @@ public class GameOfLife {
         position[0] = x;
         position[1] = y;
         return position;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public boolean isStarted() {
+        return started;
+    }
+
+    public void setStarted(boolean started) {
+        this.started = started;
+    }
+
+    public int getStartingNrCells() {
+        return startingNrCells;
+    }
+
+    public void setStartingNrCells(int startingNrCells) {
+        this.startingNrCells = startingNrCells;
+    }
+
+    public int getStartingNrResources() {
+        return startingNrResources;
+    }
+
+    public void setStartingNrResources(int startingNrResources) {
+        this.startingNrResources = startingNrResources;
+    }
+
+    public int getMapSize() {
+        return mapSize;
+    }
+
+    public void setMapSize(int mapSize) {
+        this.mapSize = mapSize;
+    }
+
+    public List<Cell> getCells() {
+        return cells;
+    }
+
+    public void setCells(List<Cell> cells) {
+        this.cells = cells;
+    }
+
+    public List<Resource> getResources() {
+        return resources;
+    }
+
+    public void setResources(List<Resource> resources) {
+        this.resources = resources;
+    }
+
+    public int[][] getCellsMap() {
+        return cellsMap;
+    }
+
+    public void setCellsMap(int[][] cellsMap) {
+        this.cellsMap = cellsMap;
+    }
+
+    public int[][] getResourcesMap() {
+        return resourcesMap;
+    }
+
+    public void setResourcesMap(int[][] resourcesMap) {
+        this.resourcesMap = resourcesMap;
     }
 }

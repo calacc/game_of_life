@@ -1,7 +1,5 @@
 package com.example.gameoflife.application;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-@Entity
+
 public class AsexualCell extends Cell {
     public AsexualCell(int id, int x, int y, GameOfLife server) {
         super(id, x, y, server);
@@ -16,8 +14,8 @@ public class AsexualCell extends Cell {
         int[] newPosition = findEmptyPositionNearby();
 
         if(newPosition != null) {
-            int newId = gameServer.cells.size() + 1;
-            gameServer.ReproduceCell(new AsexualCell(newId, newPosition[0], newPosition[1], gameServer));
+            int newId = gameOfLife.cells.size() + 1;
+            gameOfLife.ReproduceCell(new AsexualCell(newId, newPosition[0], newPosition[1], gameOfLife));
             this.foodEaten = 0;
             this.state = State.HUNGRY;
         }
@@ -31,7 +29,7 @@ public class AsexualCell extends Cell {
            int newX = x + direction[0];
            int newY = y + direction[1];
 
-           if(newX >= 0 && newY >= 0 && newX < gameServer.mapSize && newY < gameServer.mapSize && gameServer.cellsMap[newX][newY] == 0) {
+           if(newX >= 0 && newY >= 0 && newX < gameOfLife.mapSize && newY < gameOfLife.mapSize && gameOfLife.cellsMap[newX][newY] == 0) {
                return new int[]{newX, newY};
            }
        }

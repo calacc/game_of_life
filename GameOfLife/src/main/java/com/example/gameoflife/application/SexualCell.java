@@ -27,9 +27,9 @@ public class SexualCell extends Cell{
                             int[] newPosition = findEmptyPositionNearby();
 
                             if(newPosition != null) {
-                                synchronized (gameServer) {
-                                    int newId = gameServer.cells.size() + 1;
-                                    gameServer.ReproduceCell(new SexualCell(newId, newPosition[0], newPosition[1], gameServer));
+                                synchronized (gameOfLife) {
+                                    int newId = gameOfLife.cells.size() + 1;
+                                    gameOfLife.ReproduceCell(new SexualCell(newId, newPosition[0], newPosition[1], gameOfLife));
                                 }
 
                                 this.foodEaten = 0;
@@ -49,7 +49,7 @@ public class SexualCell extends Cell{
     }
 
     private Cell findMate() {
-        for(Cell cell : gameServer.cells) {
+        for(Cell cell : gameOfLife.cells) {
             if(this.x == cell.x && this.y == cell.y && this.ID != cell.ID && cell instanceof SexualCell && ((SexualCell) cell).seekingMate) {
                 return cell;
             }
@@ -65,7 +65,7 @@ public class SexualCell extends Cell{
             int newX = x + direction[0];
             int newY = y + direction[1];
 
-            if(newX >= 0 && newY >= 0 && newX < gameServer.mapSize && newY < gameServer.mapSize && gameServer.cellsMap[newX][newY] == 0) {
+            if(newX >= 0 && newY >= 0 && newX < gameOfLife.mapSize && newY < gameOfLife.mapSize && gameOfLife.cellsMap[newX][newY] == 0) {
                 return new int[]{newX, newY};
             }
         }

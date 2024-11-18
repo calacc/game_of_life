@@ -1,24 +1,22 @@
 package com.example.gameoflife.application;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 
 import java.util.concurrent.TimeUnit;
 
-@MappedSuperclass
+
 public abstract class Cell implements Runnable{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     protected int ID;
     protected int x;
     protected int y;
     protected int T_Starve;
     protected int T_Full;
-    protected State state;
     protected int foodEaten;
-    protected GameOfLife gameServer;
+
+    protected State state;
+
+    protected GameOfLife gameOfLife;
 
     public Cell() {
 
@@ -27,16 +25,16 @@ public abstract class Cell implements Runnable{
     protected synchronized boolean foodRequest()
     {
 //        System.out.println("Food request from cell with id: " + ID);
-        return gameServer.FeedCell(x, y);
+        return gameOfLife.FeedCell(x, y);
     }
     protected synchronized boolean dieRequest() {
 //        System.out.println("Kill request from cell with id: " + ID);
-        return gameServer.KillCell(x, y);
+        return gameOfLife.KillCell(x, y);
     }
     protected synchronized void moveRequest()
     {
         int[] updatedPosition = new int[2];
-        updatedPosition = gameServer.MoveCell(x, y);
+        updatedPosition = gameOfLife.MoveCell(x, y);
         x = updatedPosition[0];
         y = updatedPosition[1];
 //        System.out.println("Cell with id " + ID + " moved to position: [" + x + "][" + y +"]");
@@ -49,7 +47,7 @@ public abstract class Cell implements Runnable{
         this.ID = id;
         this.x = x;
         this.y = y;
-        this.gameServer = gameOfLifeServer;
+        this.gameOfLife = gameOfLifeServer;
 
         /*TBD if T_starve and T_full are equal for every cell or personalized*/
         /*
@@ -64,7 +62,7 @@ public abstract class Cell implements Runnable{
     public void run() {
         int time_counter = 0;
         /*while cell is alive*/
-        while(true && gameServer.started)
+        while(true && gameOfLife.started)
         {
             moveRequest();
             time_counter++;
@@ -111,5 +109,69 @@ public abstract class Cell implements Runnable{
                 System.out.println("thread.sleep was not successful");
             }
         }
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getT_Starve() {
+        return T_Starve;
+    }
+
+    public void setT_Starve(int t_Starve) {
+        T_Starve = t_Starve;
+    }
+
+    public int getT_Full() {
+        return T_Full;
+    }
+
+    public void setT_Full(int t_Full) {
+        T_Full = t_Full;
+    }
+
+    public int getFoodEaten() {
+        return foodEaten;
+    }
+
+    public void setFoodEaten(int foodEaten) {
+        this.foodEaten = foodEaten;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public GameOfLife getGameOfLife() {
+        return gameOfLife;
+    }
+
+    public void setGameOfLife(GameOfLife gameOfLife) {
+        this.gameOfLife = gameOfLife;
     }
 }
