@@ -1,0 +1,354 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "OpenAPI definition",
+    "version": "v0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/game-of-life/stopGameOfLife": {
+      "put": {
+        "tags": [
+          "game-of-life-controller"
+        ],
+        "operationId": "stopGameOfLife",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/game-of-life/startGameOfLife": {
+      "put": {
+        "tags": [
+          "game-of-life-controller"
+        ],
+        "operationId": "startGameOfLife",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/game-of-life/save": {
+      "post": {
+        "tags": [
+          "game-of-life-controller"
+        ],
+        "operationId": "saveGame",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameOfLifeEntity"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/game-of-life/createGameOfLife": {
+      "post": {
+        "tags": [
+          "game-of-life-controller"
+        ],
+        "operationId": "createGameOfLife",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/test": {
+      "get": {
+        "tags": [
+          "test-controller"
+        ],
+        "operationId": "Get",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/game-of-life/{id}": {
+      "get": {
+        "tags": [
+          "game-of-life-controller"
+        ],
+        "operationId": "getGameOfLife",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameOfLifeDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/game-of-life/getState": {
+      "get": {
+        "tags": [
+          "game-of-life-controller"
+        ],
+        "operationId": "getState",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CellEntity": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "y": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "foodEaten": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "HUNGRY",
+              "FULL"
+            ]
+          },
+          "gameOfLifeEntity": {
+            "$ref": "#/components/schemas/GameOfLifeEntity"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "t_Full": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "t_Starve": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "GameOfLifeEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "started": {
+            "type": "boolean"
+          },
+          "startingNrCells": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "startingNrResources": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mapSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cells": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CellEntity"
+            }
+          },
+          "resources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceEntity"
+            }
+          }
+        }
+      },
+      "ResourceEntity": {
+        "type": "object",
+        "properties": {
+          "ID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "row": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "col": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "gameOfLifeEntity": {
+            "$ref": "#/components/schemas/GameOfLifeEntity"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "CellDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "x": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "y": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "foodEaten": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "state": {
+            "type": "string"
+          },
+          "t_Full": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "t_Starve": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "GameOfLifeDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "started": {
+            "type": "boolean"
+          },
+          "startingNrCells": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "startingNrResources": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mapSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cells": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CellDto"
+            }
+          },
+          "resources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceDto"
+            }
+          }
+        }
+      },
+      "ResourceDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "row": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "col": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      }
+    }
+  }
+}
