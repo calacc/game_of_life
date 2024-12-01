@@ -68,7 +68,8 @@ public class GameOfLifeService {
     public GameOfLifeEntity saveGameOfLife(GameOfLife gameOfLife) {
         GameOfLifeEntity gameOfLifeEntity = new GameOfLifeEntity();
         gameOfLifeEntity.setStarted(gameOfLife.isStarted());
-        gameOfLifeEntity.setStartingNrCells(gameOfLife.getStartingNrCells());
+        gameOfLifeEntity.setStartingNrSexualCells(gameOfLife.getStartingNrSexualCells());
+        gameOfLifeEntity.setStartingNrAsexualCells(gameOfLife.getStartingNrAsexualCells());
         gameOfLifeEntity.setStartingNrResources(gameOfLife.getStartingNrResources());
         gameOfLifeEntity.setMapSize(gameOfLife.getMapSize());
 
@@ -105,7 +106,8 @@ public class GameOfLifeService {
         GameOfLifeDto gameOfLifeDto = new GameOfLifeDto();
         gameOfLifeDto.setId(gameOfLifeEntity.getId());
         gameOfLifeDto.setStarted(gameOfLifeEntity.isStarted());
-        gameOfLifeDto.setStartingNrCells(gameOfLifeEntity.getStartingNrCells());
+        gameOfLifeDto.setStartingNrSexualCells(gameOfLifeEntity.getStartingNrSexualCells());
+        gameOfLifeDto.setStartingNrAsexualCells(gameOfLifeEntity.getStartingNrAsexualCells());
         gameOfLifeDto.setStartingNrResources(gameOfLifeEntity.getStartingNrResources());
         gameOfLifeDto.setMapSize(gameOfLifeEntity.getMapSize());
 
