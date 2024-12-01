@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.4'
+    id 'io.spring.dependency-management' version '1.1.6'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(19)
+    }
+}
+
+javafx {
+    version="21.0.5"
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+repositories {
+    mavenCentral()
+
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.18.2'
+//    implementation 'com.fasterxml.jackson.core:jackson-core:2.10.1'
+//    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.10.1'
+//    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.10.1'
+//    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.10.1'
+    implementation files('libs/GameOfLife-0.0.1-SNAPSHOT-plain.jar/')
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

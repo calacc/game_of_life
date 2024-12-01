@@ -5,7 +5,8 @@ import java.util.List;
 public class GameOfLifeDto {
     private Long id;
     private boolean started;
-    private int startingNrCells;
+    private int startingNrSexualCells;
+    private int startingNrAsexualCells;
     private int startingNrResources;
     private int mapSize;
     private List<CellDto> cells;
@@ -27,14 +28,21 @@ public class GameOfLifeDto {
         this.started = started;
     }
 
-    public int getStartingNrCells() {
-        return startingNrCells;
+    public int getStartingNrSexualCells() {
+        return startingNrSexualCells;
     }
 
-    public void setStartingNrCells(int startingNrCells) {
-        this.startingNrCells = startingNrCells;
+    public int getStartingNrAsexualCells() {
+        return startingNrAsexualCells;
     }
 
+    public void setStartingNrSexualCells(int startingNrSexualCells) {
+        this.startingNrSexualCells = startingNrSexualCells;
+    }
+
+    public void setStartingNrAsexualCells(int startingNrAsexualCells) {
+        this.startingNrAsexualCells = startingNrAsexualCells;
+    }
     public int getStartingNrResources() {
         return startingNrResources;
     }

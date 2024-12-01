@@ -10,7 +10,8 @@ public class GameOfLife {
 
     private Long id;
     protected boolean started = false;
-    protected int startingNrCells = 2;
+    protected int startingNrSexualCells = 2;
+    protected int startingNrAsexualCells = 2;
     protected int startingNrResources = 15;
     protected int mapSize = 4;
 
@@ -47,18 +48,16 @@ public class GameOfLife {
         cellsMap = new int[mapSize + 5][mapSize + 5];
         resourcesMap = new int[mapSize + 5][mapSize + 5];
 
-        for (int i = 0; i < startingNrCells / 2; ++i) {
-            Cell newSCell1 = new SexualCell(i * 2, Math.abs(random.nextInt() % mapSize), Math.abs(random.nextInt() % mapSize), this);
-            cells.add(newSCell1);
-            cellsMap[newSCell1.x][newSCell1.y] = 1;
+        for (int i = 0; i < startingNrSexualCells; ++i) {
+            Cell newSCell = new SexualCell(Math.abs(random.nextInt() % 1000), Math.abs(random.nextInt() % mapSize), Math.abs(random.nextInt() % mapSize), this);
+            cells.add(newSCell);
+            cellsMap[newSCell.x][newSCell.y] = 1;
+        }
 
-            Cell newSCell2 = new SexualCell(i * 2 + 1, Math.abs(random.nextInt() % mapSize), Math.abs(random.nextInt() % mapSize), this);
-            cells.add(newSCell2);
-            cellsMap[newSCell2.x][newSCell2.y] = 1;
-
-            Cell newSCell3 = new SexualCell(i * 2 + 2, Math.abs(random.nextInt() % mapSize), Math.abs(random.nextInt() % mapSize), this);
-            cells.add(newSCell3);
-            cellsMap[newSCell3.x][newSCell3.y] = 1;
+        for (int i = 0; i < startingNrAsexualCells; ++i) {
+            Cell newACell = new AsexualCell(Math.abs(random.nextInt() % 1000), Math.abs(random.nextInt() % mapSize), Math.abs(random.nextInt() % mapSize), this);
+            cells.add(newACell);
+            cellsMap[newACell.x][newACell.y] = 1;
         }
 
         for (int i = 0; i < startingNrResources; ++i) {
@@ -69,7 +68,7 @@ public class GameOfLife {
 
         System.out.println();
         System.out.println("GameOfLife instance created");
-        System.out.println("Starting Nr Cells: " + startingNrCells);
+        System.out.println("Starting Nr Cells: Sexual: " + startingNrSexualCells + " Asexual: " + startingNrAsexualCells);
         System.out.println("Starting Nr Resources: " + startingNrResources);
         System.out.println("Map size: " + mapSize);
         System.out.println();
@@ -175,12 +174,20 @@ public class GameOfLife {
         this.started = started;
     }
 
-    public int getStartingNrCells() {
-        return startingNrCells;
+    public int getStartingNrSexualCells() {
+        return startingNrSexualCells;
     }
 
-    public void setStartingNrCells(int startingNrCells) {
-        this.startingNrCells = startingNrCells;
+    public int getStartingNrAsexualCells() {
+        return startingNrAsexualCells;
+    }
+
+    public void setStartingNrSexualCells(int startingNrSexualCells) {
+        this.startingNrSexualCells = startingNrSexualCells;
+    }
+
+    public void setStartingNrAsexualCel(int startingNrAsexualCells) {
+        this.startingNrAsexualCells = startingNrAsexualCells;
     }
 
     public int getStartingNrResources() {

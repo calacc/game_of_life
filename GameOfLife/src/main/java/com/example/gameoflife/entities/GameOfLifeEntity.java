@@ -13,7 +13,8 @@ public class GameOfLifeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     protected boolean started = false;
-    protected int startingNrCells = 2;
+    protected int startingNrSexualCells = 2;
+    protected int startingNrAsexualCells = 2;
     protected int startingNrResources = 15;
     protected int mapSize = 4;
 
@@ -55,12 +56,20 @@ public class GameOfLifeEntity {
         this.startingNrResources = startingNrResources;
     }
 
-    public int getStartingNrCells() {
-        return startingNrCells;
+    public int getStartingNrSexualCells() {
+        return startingNrSexualCells;
     }
 
-    public void setStartingNrCells(int startingNrCells) {
-        this.startingNrCells = startingNrCells;
+    public int getStartingNrAsexualCells() {
+        return startingNrAsexualCells;
+    }
+
+    public void setStartingNrSexualCells(int startingNrSexualCells) {
+        this.startingNrSexualCells = startingNrSexualCells;
+    }
+
+    public void setStartingNrAsexualCells(int startingNrAsexualCells) {
+        this.startingNrAsexualCells = startingNrAsexualCells;
     }
 
     public boolean isStarted() {
