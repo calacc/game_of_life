@@ -13,7 +13,7 @@ public class GameOfLife {
     protected int startingNrSexualCells = 2;
     protected int startingNrAsexualCells = 2;
     protected int startingNrResources = 15;
-    protected int mapSize = 4;
+    protected int mapSize = 20;
 
 
     protected List<Cell> cells = new ArrayList<>();
@@ -31,7 +31,12 @@ public class GameOfLife {
         state.map = this.cellsMap;
         state.started = this.started;
         state.cells = this.cells.size();
-        state.resources = this.resources.size();
+        state.resources = this.cells.stream().map(r -> {
+            Resource resourceState = new Resource();
+            resourceState.row = r.x;
+            resourceState.col = r.y;
+            return resourceState;
+        }).toArray(Resource[]::new);
         state.activeCells = this.cells.stream().map(c -> {
             CellState cellState = new CellState();
             cellState.x = c.x;

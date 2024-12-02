@@ -16,7 +16,7 @@ public class GameOfLifeEntity {
     protected int startingNrSexualCells = 2;
     protected int startingNrAsexualCells = 2;
     protected int startingNrResources = 15;
-    protected int mapSize = 4;
+    protected int mapSize = 20;
 
     @OneToMany(mappedBy = "gameOfLifeEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     protected List<CellEntity> cells = new ArrayList<>();
