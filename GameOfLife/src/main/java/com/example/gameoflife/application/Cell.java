@@ -13,6 +13,7 @@ public abstract class Cell implements Runnable{
     protected int T_Starve;
     protected int T_Full;
     protected int foodEaten;
+    protected boolean isAlive;
 
     protected State state;
 
@@ -58,6 +59,7 @@ public abstract class Cell implements Runnable{
         this.T_Starve = 20;
         this.foodEaten = 0;
         this.state = State.HUNGRY;
+        this.isAlive = true;
     }
     public void run() {
         int time_counter = 0;
@@ -81,7 +83,11 @@ public abstract class Cell implements Runnable{
                     {
                         if(time_counter == T_Starve)
                         {
-                            if(dieRequest()) return;
+                            if(dieRequest())
+                            {
+                                isAlive = false;
+                                return;
+                            }
                         }
                     }
 
@@ -161,6 +167,14 @@ public abstract class Cell implements Runnable{
 
     public State getState() {
         return state;
+    }
+
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setAlive(boolean alive) {
+        isAlive = alive;
     }
 
     public void setState(State state) {

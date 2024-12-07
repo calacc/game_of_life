@@ -31,16 +31,12 @@ public class GameOfLife {
         state.map = this.cellsMap;
         state.started = this.started;
         state.cells = this.cells.size();
-        state.resources = this.cells.stream().map(r -> {
-            Resource resourceState = new Resource();
-            resourceState.row = r.x;
-            resourceState.col = r.y;
-            return resourceState;
-        }).toArray(Resource[]::new);
+        state.resources = this.resources.toArray(new Resource[0]);
         state.activeCells = this.cells.stream().map(c -> {
             CellState cellState = new CellState();
             cellState.x = c.x;
             cellState.y = c.y;
+            cellState.isAlive = c.isAlive;
             return cellState;
         }).toArray(CellState[]::new);
         return state;
@@ -119,6 +115,10 @@ public class GameOfLife {
         if (resourcesMap[x][y] == 1) {
             System.out.println("Feeding cell");
             resourcesMap[x][y] = 0;
+            for(Resource r: resources) {
+                if(r.row == x && r.col == y)
+                    resources.remove(r);
+            }
             return true;
         } else {
             return false;

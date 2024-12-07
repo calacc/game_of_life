@@ -81,7 +81,7 @@ public class GameController {
                 square.setX(cell.x * 10);
                 square.setY(cell.y * 10);
 
-                if(cell.x == 0 && cell.y == 0) {
+                if(!cell.isAlive) {
                     square.setFill(Color.RED);
                 }
 
