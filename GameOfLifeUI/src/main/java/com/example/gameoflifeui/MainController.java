@@ -1,7 +1,10 @@
 package com.example.gameoflifeui;
 
+import com.example.gameoflife.dto.GameOfLifeDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
@@ -17,14 +20,25 @@ import java.net.http.HttpResponse;
 public class MainController {
     private static final String BASE_URL = "http://localhost:8080/game-of-life";
     private final HttpClient httpClient;
+    private final ObjectMapper objectMapper;
 
     @Autowired
     private GameController gameController;
     @FXML
     private Button startGameButton;
 
+    @FXML
+    private TextField resourcesField;
+
+    @FXML
+    private TextField sexualCellsField;
+
+    @FXML
+    private TextField asexualCellsField;
+
     public MainController() {
         this.httpClient = HttpClient.newHttpClient();
+        this.objectMapper = new ObjectMapper();
     }
 
     @FXML
@@ -34,10 +48,22 @@ public class MainController {
 
     private void startNewGame() {
         try {
+            int numberOfResources = Integer.parseInt(resourcesField.getText());
+            int numberOfSexualCells = Integer.parseInt(sexualCellsField.getText());
+            int numberOfAsexualCells = Integer.parseInt(asexualCellsField.getText());
+
+            GameOfLifeDto config = new GameOfLifeDto();
+            config.setStartingNrResources(numberOfResources);
+            config.setStartingNrSexualCells(numberOfSexualCells);
+            config.setStartingNrAsexualCells(numberOfAsexualCells);
+
+            String jsonBody = objectMapper.writeValueAsString(config);
+
             // Request to start the game
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(BASE_URL + "/createGameOfLife"))
-                    .POST(HttpRequest.BodyPublishers.noBody())
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
                     .build();
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 

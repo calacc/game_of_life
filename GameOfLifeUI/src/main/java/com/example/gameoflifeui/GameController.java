@@ -9,6 +9,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
@@ -29,6 +30,7 @@ public class GameController {
     private static String BASE_URL = "http://localhost:8080/game-of-life";
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
+
     @FXML
     private Pane cellsContainer;
 

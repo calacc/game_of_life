@@ -35,9 +35,9 @@ public class GameOfLifeService {
 
     private GameOfLife gameOfLife;
 
-    public GameOfLife createGameOfLife() {
+    public GameOfLife createGameOfLife(int startingNumberOfResources, int startingNumberOfSexualCells, int startingNumberOfAsexualCells) {
         if (this.gameOfLife == null) {
-            this.gameOfLife = new GameOfLife();
+            this.gameOfLife = new GameOfLife(startingNumberOfResources, startingNumberOfSexualCells, startingNumberOfAsexualCells);
         }
         return this.gameOfLife;
     }

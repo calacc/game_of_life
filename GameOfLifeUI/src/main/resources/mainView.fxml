@@ -3,7 +3,19 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.gameoflifeui.MainController" alignment="CENTER" spacing="20">
-    <Label text="Welcome to Game of Life!" style="-fx-font-size: 20px;" />
-    <Button fx:id="startGameButton" text="Start a New Game" />
+<VBox alignment="CENTER" prefHeight="301.0" prefWidth="459.0" spacing="20" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gameoflifeui.MainController">
+    <Label style="-fx-font-size: 20px;" text="Welcome to Game of Life!" />
+   <Pane prefHeight="163.0" prefWidth="478.0">
+      <children>
+         <Label layoutX="14.0" text="Number of resources:" />
+         <TextField fx:id="resourcesField" layoutX="14.0" layoutY="17.0" prefHeight="17.0" prefWidth="51.0" />
+
+         <Label layoutX="14.0" layoutY="53.0" text="Number of sexual cells:" />
+         <TextField fx:id="sexualCellsField" layoutX="14.0" layoutY="70.0" prefHeight="25.0" prefWidth="51.0" />
+
+         <Label layoutX="14.0" layoutY="108.0" text="Number of asexual cells" />
+         <TextField fx:id="asexualCellsField" layoutX="14.0" layoutY="127.0" prefHeight="25.0" prefWidth="51.0" />
+      </children>
+   </Pane>
+    <Button fx:id="startGameButton" prefHeight="29.0" prefWidth="123.0" text="Create a new game" />
 </VBox>

@@ -57,11 +57,11 @@ public class GameOfLifeController {
     }
 
     @PostMapping("/createGameOfLife")
-    public ResponseEntity<String> createGameOfLife() {
+    public ResponseEntity<String> createGameOfLife(@RequestBody GameOfLifeDto config) {
         if (gameOfLifeService.isGameOfLifeCreated()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Game of life already exists");
         } else {
-            gameOfLifeService.createGameOfLife();
+            gameOfLifeService.createGameOfLife(config.getStartingNrResources(), config.getStartingNrSexualCells(), config.getStartingNrAsexualCells());
             return ResponseEntity.ok("Game of life created");
         }
     }

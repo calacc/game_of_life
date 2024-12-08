@@ -102,7 +102,7 @@ public abstract class Cell implements Runnable{
                     break;
                 }
             }
-            if(foodEaten >= 10)
+            if(foodEaten >= 3)
             {
                 /*if multiply request successful -> getting hungry again*/
                 reproduceRequest();

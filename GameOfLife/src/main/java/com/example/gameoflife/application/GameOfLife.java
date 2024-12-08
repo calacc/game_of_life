@@ -10,9 +10,9 @@ public class GameOfLife {
 
     private Long id;
     protected boolean started = false;
-    protected int startingNrSexualCells = 2;
-    protected int startingNrAsexualCells = 2;
-    protected int startingNrResources = 15;
+    protected int startingNrSexualCells;
+    protected int startingNrAsexualCells;
+    protected int startingNrResources;
     protected int mapSize = 20;
 
 
@@ -43,12 +43,16 @@ public class GameOfLife {
         return state;
     }
 
-    public GameOfLife() {
+    public GameOfLife(int startingNrResources, int startingNrSexualCells, int startingNrAsexualCells) {
         Random random = new Random();
         cells = new ArrayList<>();
         resources = new ArrayList<>();
         cellsMap = new int[mapSize + 5][mapSize + 5];
         resourcesMap = new int[mapSize + 5][mapSize + 5];
+
+        this.startingNrResources = startingNrResources;
+        this.startingNrSexualCells = startingNrSexualCells;
+        this.startingNrAsexualCells = startingNrAsexualCells;
 
         for (int i = 0; i < startingNrSexualCells; ++i) {
             Cell newSCell = new SexualCell(Math.abs(random.nextInt() % 1000), Math.abs(random.nextInt() % mapSize), Math.abs(random.nextInt() % mapSize), this);
