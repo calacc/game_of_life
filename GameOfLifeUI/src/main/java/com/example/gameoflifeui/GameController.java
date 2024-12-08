@@ -3,6 +3,7 @@ package com.example.gameoflifeui;
 import com.example.gameoflife.application.CellState;
 import com.example.gameoflife.application.GameState;
 import com.example.gameoflife.application.Resource;
+import com.example.gameoflife.application.State;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -28,7 +29,6 @@ public class GameController {
     private static String BASE_URL = "http://localhost:8080/game-of-life";
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
-
     @FXML
     private Pane cellsContainer;
 
@@ -81,18 +81,18 @@ public class GameController {
                 square.setX(cell.x * 10);
                 square.setY(cell.y * 10);
 
-                if(!cell.isAlive) {
-                    square.setFill(Color.RED);
+                if(cell.state == State.HUNGRY) {
+                    square.setFill(Color.ORANGE);
                 }
 
                 cellsContainer.getChildren().add(square);
             }
             for (Resource resource : resources) {
-                Rectangle resourceSquare = new Rectangle(5, 5);
+                Rectangle resourceSquare = new Rectangle(10, 10);
                 resourceSquare.setFill(Color.GREEN);
 
-                resourceSquare.setX(resource.row * 5);
-                resourceSquare.setY(resource.col * 5);
+                resourceSquare.setX(resource.row * 10);
+                resourceSquare.setY(resource.col * 10);
 
                 cellsContainer.getChildren().add(resourceSquare);
             }

@@ -19,18 +19,14 @@ import java.io.IOException;
 
 @Component
 public class StageInitializer implements ApplicationListener<StageReadyEvent> {
-    @Value("classpath:/home.fxml")
-    private Resource homeResource;
+    @Value("classpath:/gameView.fxml")
+    private Resource gameResource;
+
+    @Value("classpath:/mainView.fxml")
+    private Resource mainResource;
 
     private String applicationTitle;
     private ApplicationContext applicationContext;
-
-    @Autowired
-    private GameController gameController;
-
-    @FXML
-    private VBox cellsContainer;
-    private Pane gamePane;
 
     public StageInitializer(@Value("${spring.application.ui.title}") String applicationTitle, ApplicationContext applicationContext) {
         this.applicationTitle = applicationTitle;
@@ -40,7 +36,7 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
     @Override
     public void onApplicationEvent(StageReadyEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(homeResource.getURL());
+            FXMLLoader fxmlLoader = new FXMLLoader(mainResource.getURL());
             fxmlLoader.setControllerFactory(aClass -> applicationContext.getBean(aClass));
             Parent parent = fxmlLoader.load();
 
@@ -49,7 +45,7 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
             stage.setTitle(applicationTitle);
             stage.show();
 
-            gameController.setupGameLoop();
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

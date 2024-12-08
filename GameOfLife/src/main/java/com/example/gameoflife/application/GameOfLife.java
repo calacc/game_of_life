@@ -37,6 +37,7 @@ public class GameOfLife {
             cellState.x = c.x;
             cellState.y = c.y;
             cellState.isAlive = c.isAlive;
+            cellState.state = c.state;
             return cellState;
         }).toArray(CellState[]::new);
         return state;
@@ -117,7 +118,11 @@ public class GameOfLife {
             resourcesMap[x][y] = 0;
             for(Resource r: resources) {
                 if(r.row == x && r.col == y)
+                {
                     resources.remove(r);
+                    break;
+                }
+
             }
             return true;
         } else {
@@ -129,9 +134,19 @@ public class GameOfLife {
         System.out.println("Killing cell");
         Random random = new Random();
         cellsMap[x][y] = 0;
-        for (int i = 0; i < random.nextInt() % 5; ++i) {
+        for(Cell c: cells) {
+            if (c.x == x && c.y == y) {
+                cells.remove(c);
+                System.out.println("dead cell was removed from list");
+                break;
+            }
+        }
+        int resourcesGeneratedCount = Math.abs(random.nextInt() % 5);
+        System.out.println(resourcesGeneratedCount + "new resources");
+        for (int i = 0; i < resourcesGeneratedCount; ++i) {
             Resource resource = new Resource(i, Math.abs(random.nextInt() % mapSize), Math.abs(random.nextInt() % mapSize));
             resources.add(resource);
+            System.out.println(resource.row + " " + resource.col);
             resourcesMap[resource.row][resource.col] = 1;
         }
         return true;
