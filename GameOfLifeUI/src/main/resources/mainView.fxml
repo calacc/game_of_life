@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.gameoflifeui.MainController" alignment="CENTER" spacing="20">
+    <Label text="Welcome to Game of Life!" style="-fx-font-size: 20px;" />
+    <Button fx:id="startGameButton" text="Start a New Game" />
+</VBox>

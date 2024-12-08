@@ -8,7 +8,7 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ConfigurableApplicationContext;
 
 public class GameApplication extends Application {
-    private ConfigurableApplicationContext applicationContext;
+    private static ConfigurableApplicationContext applicationContext;
 
     @Override
     public void init() {
@@ -24,6 +24,10 @@ public class GameApplication extends Application {
     public void stop() {
         applicationContext.close();
         Platform.exit();
+    }
+
+    public static ConfigurableApplicationContext getApplicationContext() {
+        return applicationContext;
     }
 
     static class StageReadyEvent extends ApplicationEvent {

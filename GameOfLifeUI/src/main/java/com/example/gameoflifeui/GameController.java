@@ -2,11 +2,14 @@ package com.example.gameoflifeui;
 
 import com.example.gameoflife.application.CellState;
 import com.example.gameoflife.application.GameState;
+import com.example.gameoflife.application.Resource;
+import com.example.gameoflife.application.State;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import org.springframework.stereotype.Component;
@@ -15,17 +18,19 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javafx.scene.shape.*;
+import javafx.scene.paint.Color;
 
 @Component
 public class GameController {
     private static String BASE_URL = "http://localhost:8080/game-of-life";
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
-
     @FXML
-    private VBox cellsContainer;
+    private Pane cellsContainer;
 
     public GameController() {
         this.httpClient = HttpClient.newHttpClient();
@@ -67,27 +72,30 @@ public class GameController {
 
             // Display each cell as a Label at the corresponding x, y position
             List<CellState> cells = Arrays.asList(gameState.activeCells);
+            List<Resource> resources = Arrays.asList(gameState.resources);
+
             for (CellState cell : cells) {
-                Label cellLabel = new Label("Cell at (" + cell.x + "," + cell.y + ")");
-                cellLabel.setStyle("-fx-background-color: blue; -fx-text-fill: white; -fx-font-size: 12px;");
-                cellLabel.setMinSize(10, 10);
-                cellsContainer.getChildren().add(cellLabel);
+                Rectangle square = new Rectangle(10, 10);
+                square.setFill(Color.BLUE);
+
+                square.setX(cell.x * 10);
+                square.setY(cell.y * 10);
+
+                if(cell.state == State.HUNGRY) {
+                    square.setFill(Color.ORANGE);
+                }
+
+                cellsContainer.getChildren().add(square);
+            }
+            for (Resource resource : resources) {
+                Rectangle resourceSquare = new Rectangle(10, 10);
+                resourceSquare.setFill(Color.GREEN);
+
+                resourceSquare.setX(resource.row * 10);
+                resourceSquare.setY(resource.col * 10);
+
+                cellsContainer.getChildren().add(resourceSquare);
             }
         }
     }
-
-//    @FXML
-//    public void initialize() {
-//        GameState gameState = getGameState();
-//        if(gameState != null) {
-//            List<CellState> cells = Arrays.asList(gameState.activeCells);
-//            for(CellState cell : cells) {
-//                Label cellLabel = new Label("Cell at (" + cell.x + "," + cell.y + ")");
-//                cellsContainer.getChildren().add(cellLabel);
-//            }
-//        } else {
-//            Label errorLabel = new Label("No active cells");
-//            cellsContainer.getChildren().add(errorLabel);
-//        }
-//    }
 }
