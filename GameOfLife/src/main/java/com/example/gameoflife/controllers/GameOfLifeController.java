@@ -14,7 +14,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/game-of-life")
 public class GameOfLifeController {
 
@@ -85,5 +88,11 @@ public class GameOfLifeController {
         } catch (EntityNotFoundException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<GameOfLifeDto>> getAllGamesOfLife() {
+        List<GameOfLifeDto> gameOfLifeDtos = gameOfLifeService.getAllGamesOfLife();
+        return ResponseEntity.ok(gameOfLifeDtos);
     }
 }

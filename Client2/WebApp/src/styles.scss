@@ -1,0 +1,108 @@
+/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+mat-form-field {
+  margin-bottom: 1rem;
+}
+
+mat-progress-bar.small {
+  height: 2px !important;
+}
+
+.mdc-dialog__surface {
+  overflow-y: hidden !important;
+}
+
+mat-toolbar {
+  background: white !important;
+  //background-color: rgba(255, 255, 255, 0.6) !important;
+  //backdrop-filter: blur(10px) !important;
+}
+
+mat-drawer {
+  background: white !important;
+  border-radius: 0px !important;
+}
+
+mat-drawer-content {
+  scroll-behavior: smooth !important;
+  overflow-y: scroll !important;
+  background-color: white !important;
+}
+
+mat-drawer-container {
+  scroll-behavior: smooth !important;
+}
+
+.mat-mdc-dialog-content {
+  max-height: 100% !important;
+}
+
+.active-link {
+  background-color: #ebf8e8 !important;
+}
+
+.link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.link {
+  font-weight: 500;
+}
+
+.mat-mdc-snackbar-surface {
+  white-space: pre-wrap
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(15px);
+  }
+  20% {
+    transform: translate(-15px);
+  }
+  40% {
+    transform: translate(7px);
+  }
+  60% {
+    transform: translate(-7px);
+  }
+  80% {
+    transform: translate(4px);
+  }
+  100% {
+    origin-transform: translate(0px);
+  }
+}
+
+.shake {
+  animation: shake 0.4s 1 linear;
+}
+
+.spinner:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  border-top-color: #000000;
+  animation: spinner .8s linear infinite;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+

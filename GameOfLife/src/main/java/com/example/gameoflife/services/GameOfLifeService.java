@@ -139,4 +139,50 @@ public class GameOfLifeService {
         return gameOfLifeDto;
 
     }
+
+    public List<GameOfLifeDto> getAllGamesOfLife() {
+        List<GameOfLifeEntity> gameOfLifeEntities = gameOfLifeRepository.findAll();
+
+        List<GameOfLifeDto> gameOfLifeDtos = new ArrayList<>();
+        for (GameOfLifeEntity gameOfLifeEntity : gameOfLifeEntities) {
+            GameOfLifeDto gameOfLifeDto = new GameOfLifeDto();
+            gameOfLifeDto.setId(gameOfLifeEntity.getId());
+            gameOfLifeDto.setStarted(gameOfLifeEntity.isStarted());
+            gameOfLifeDto.setStartingNrSexualCells(gameOfLifeEntity.getStartingNrSexualCells());
+            gameOfLifeDto.setStartingNrAsexualCells(gameOfLifeEntity.getStartingNrAsexualCells());
+            gameOfLifeDto.setStartingNrResources(gameOfLifeEntity.getStartingNrResources());
+            gameOfLifeDto.setMapSize(gameOfLifeEntity.getMapSize());
+
+            // Map Cells
+            List<CellDto> cellDtos = new ArrayList<>();
+            for (CellEntity cellEntity : gameOfLifeEntity.getCells()) {
+                CellDto cellDto = new CellDto();
+                cellDto.setId(cellEntity.getID());
+                cellDto.setX(cellEntity.getX());
+                cellDto.setY(cellEntity.getY());
+                cellDto.setT_Starve(cellEntity.getT_Starve());
+                cellDto.setT_Full(cellEntity.getT_Full());
+                cellDto.setFoodEaten(cellEntity.getFoodEaten());
+                cellDto.setState(cellEntity.getState().name()); // Convert Enum to String
+                cellDtos.add(cellDto);
+            }
+            gameOfLifeDto.setCells(cellDtos);
+
+            // Map Resources
+            List<ResourceDto> resourceDtos = new ArrayList<>();
+            for (ResourceEntity resourceEntity : gameOfLifeEntity.getResources()) {
+                ResourceDto resourceDto = new ResourceDto();
+                resourceDto.setId(resourceEntity.getID());
+                resourceDto.setRow(resourceEntity.getRow());
+                resourceDto.setCol(resourceEntity.getCol());
+                resourceDtos.add(resourceDto);
+            }
+            gameOfLifeDto.setResources(resourceDtos);
+
+            gameOfLifeDtos.add(gameOfLifeDto);
+        }
+
+        return gameOfLifeDtos;
+    }
+
 }
