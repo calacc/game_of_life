@@ -1,0 +1,30 @@
+<!--It needs to be cdkScrollable otherwise Overlay Scroll Strategies wont work properly-->
+<div [@fadeInAnimation] cdkScrollable class="h-full overflow-y-scroll" id="main">
+    <!-- DRAWER -->
+    <div class="h-full fixed top-0 z-50 desktop-drawer-width  visible-desktop" id="desktop-drawer">
+        <div class="flex-col flex pl-2 pr-2 h-full">
+            <div class="pt-4 pb-4 pl-3 flex items-center">
+                <div class="text-2xl mr-1">{{AppData.name}}</div>
+                <app-logo [size]="24"></app-logo>
+            </div>
+            <app-navigation-buttons class="h-full"></app-navigation-buttons>
+        </div>
+    </div>
+    <!-- CONTENT -->
+    <div class="min-h-full  padding-for-desktop-drawer">
+        <div class="w-full-toolbar fixed top-0 z-2000">
+            <mat-toolbar [@fadeInAnimation]>
+                <button (click)="openNavigationDialog()"
+                        class="visible-mobile mr-1 example-icon"
+                        mat-icon-button>
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <span class="text-2xl">{{ featureName$ | async }}</span>
+            </mat-toolbar>
+        </div>
+        <div class="content-with-toolbar">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
+

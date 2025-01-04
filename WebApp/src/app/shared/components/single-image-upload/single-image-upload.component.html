@@ -1,0 +1,58 @@
+<!--<div [style.width]="totalWidthPx" class="border rounded-2xl flex">-->
+<!--    <div [style.height]="heightPx" [style.width]="widthPx">-->
+<!--        <div *ngIf="!loading && !file" [style.height]="heightPx" class=" flex items-center justify-center">-->
+<!--            <mat-icon class="scale-150 text-primary">image</mat-icon>-->
+<!--        </div>-->
+<!--        <div *ngIf="loading" [style.height]="heightPx" class=" flex items-center justify-center">-->
+<!--            <mat-spinner [diameter]="24"></mat-spinner>-->
+<!--        </div>-->
+<!--        <div *ngIf="file">-->
+<!--            <img [src]="file | getFileUrl" [style.height]="heightPx" alt="Uploaded Image"-->
+<!--                 class=" w-full object-cover rounded-l-xl"/>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div [style.height]="heightPx" class="border-l flex flex-col p-2">-->
+<!--        <button (click)="deleteFile(fileInput)" *ngIf="file" mat-icon-button>-->
+<!--            <mat-icon>close</mat-icon>-->
+<!--        </button>-->
+<!--        <label class="self-end mt-auto justify-end inline-block cursor-pointer " for="image-upload" id="zone">-->
+<!--            <div class="bg-primary text-surface pl-2 pr-2 pt-1 pb-1 rounded-full">-->
+<!--                <mat-icon>upload</mat-icon>-->
+<!--            </div>-->
+
+<!--            <input #fileInput (change)="onFileInputChange($event)" accept="image/*" class="hidden" id="image-upload"-->
+<!--                   type="file"/>-->
+<!--        </label>-->
+<!--    </div>-->
+<!--</div>-->
+<div [style.height]="heightPx" [style.width]="totalWidthPx" class="flex">
+    <label *ngIf="!file && !loading" [for]="'dropzone-file' + randomId" [style.height]="heightPx"
+           [style.width]="widthPx"
+           class="flex flex-col items-center justify-center w-full h-52 border-2 border-dashed rounded-2xl cursor-pointer ">
+        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+            <mat-icon class="zone-text-color scale-150 mb-4 text-primary ">image</mat-icon>
+            <p class="zone-text-color mb-2 text-sm text-primary"><span class="font-medium">Click to upload</span> or
+                drag and drop</p>
+        </div>
+        <input #fileInput (change)="onFileInputChange($event)" [id]="'dropzone-file' + randomId" accept="image/*"
+               class="hidden"
+               type="file"/>
+
+    </label>
+    <div *ngIf="loading" [style.height]="heightPx" [style.width]="widthPx" class=" flex items-center justify-center">
+        <mat-spinner [diameter]="24"></mat-spinner>
+    </div>
+    <div *ngIf="file">
+        <div [style.height]="heightPx" [style.width]="widthPx" class="border-t rounded-l-2xl">
+            <img [src]="file | getFileUrl" [style.height]="heightPx" [style.width]="widthPx" alt="Uploaded Image"
+                 class=" w-full object-cover rounded-2xl"/>
+        </div>
+
+    </div>
+    <div *ngIf="file" class="p-1 border-t border-b border-r rounded-r-2xl h-min">
+        <button (click)="deleteFile()" class="" mat-icon-button>
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+</div>

@@ -1,0 +1,65 @@
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+
+// Comment out the line below if you want to use the pre-defined typography utility classes.
+// For more information: https://material.angular.io/guide/typography#using-typography-styles-in-your-application.
+// @include mat.typography-hierarchy($WebApp-theme);
+
+// Comment out the line below if you want to use the deprecated `color` inputs.
+// @include mat.color-variants-backwards-compatibility($WebApp-theme);
+
+@include mat.core();
+$WebApp-theme: mat.define-theme((
+        color: (
+                theme-type: light,
+                primary: mat.$green-palette,
+                tertiary: mat.$blue-palette,
+        ),
+        density: (
+                scale: 0,
+        ),
+        typography: (
+                plain-family: Roboto,
+                brand-family: Roboto,
+        )
+));
+
+:root {
+  @include mat.all-component-themes($WebApp-theme);
+  --color-primary: #{mat.get-theme-color($WebApp-theme, "primary")};
+  --color-secondary: #{mat.get-theme-color($WebApp-theme, "secondary")};
+  --color-tertiary: #{mat.get-theme-color($WebApp-theme, "tertiary")};
+  --color-surface: #{mat.get-theme-color($WebApp-theme, "surface")};
+  --color-primary-100: #{rgba(mat.get-theme-color($WebApp-theme, 'primary'), 0.1)};
+  --color-surface-100: #{rgba(mat.get-theme-color($WebApp-theme, 'surface'), 0.1)};
+  --color-error: #{rgba(mat.get-theme-color($WebApp-theme, 'error'), 0.8)};
+  --color-border: #e5e7eb;
+  --inverse-on-surface: #{rgba(mat.get-theme-color($WebApp-theme, 'inverse-on-surface'), 1)};
+  --overlay-background: #{rgba(mat.get-theme-color($WebApp-theme, 'inverse-on-surface'), 1)};
+  --toolbar-height: 64px;
+  --overlay-boxshadow: var(--mat-select-container-elevation-shadow);
+}
+
+@media (max-width: 599px) {
+  :root {
+    --toolbar-height: 56px;
+  }
+}
+
+html, body {
+  height: 100%;
+  background-color: var(--color-surface) !important;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+html {
+  //color-scheme: dark;
+}

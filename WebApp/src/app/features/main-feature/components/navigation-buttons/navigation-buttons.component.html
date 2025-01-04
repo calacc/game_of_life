@@ -1,0 +1,37 @@
+<div class="flex flex-col h-full navigation-buttons">
+    <!-- Top Buttons -->
+    <button (click)="goTo( '', 'Home')" [class.active-link]="(featureName$ | async) === 'Home'" class="mt-2"
+            mat-button>
+        <mat-icon>home</mat-icon>
+        Home
+    </button>
+    <button (click)="goTo( '/analytics/games', 'Analytics')" [class.active-link]="(featureName$ | async) === 'Analytics'"
+            class="mt-2" mat-button>
+        <mat-icon>analytics</mat-icon>
+        Analytics
+    </button>
+    <button (click)="goTo( '/table/games', 'Table')" [class.active-link]="(featureName$ | async) === 'Table'"
+            class="mt-2"
+            mat-button>
+        <mat-icon>table_view</mat-icon>
+        Tables
+    </button>
+    <button (click)="goTo( '/debug', 'Debug')" [class.active-link]="(featureName$ | async) === 'Debug'"
+            class="mt-2" mat-button
+    >
+        <mat-icon>bug_report</mat-icon>
+        Debug
+    </button>
+
+
+    <!-- Bottom Buttons -->
+    <div class="mt-auto mb-8 flex flex-col">
+<!--        <button (click)="goTo( '/settings', 'Settings')"-->
+<!--                [class.active-link]="(featureName$ | async) === 'Settings'" mat-button><span>Settings</span>-->
+<!--            <mat-icon>settings</mat-icon>-->
+<!--        </button>-->
+        <button (click)="logout()" class="mt-2" mat-button><span>Log out</span>
+            <mat-icon>logout</mat-icon>
+        </button>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<div>
+    <div class="fixed-tabs z-2000">
+        <nav [@fadeInAnimation] [tabPanel]="tabPanel" mat-align-tabs="start" mat-stretch-tabs="false"
+             mat-tab-nav-bar>
+            <a (click)="goTo('/tab-nav/page1', 'page1')"
+               [active]="(activeTab$ | async) === 'page1'"
+               mat-tab-link
+            >Page 1</a>
+            <a (click)="goTo('/tab-nav/page2', 'page2')"
+               [active]="(activeTab$ | async) === 'page2'"
+               mat-tab-link
+            >Page 2</a>
+            <a (click)="goTo('/tab-nav/page3', 'page3')"
+               [active]="(activeTab$ | async) === 'page3'"
+               mat-tab-link
+            >Page 3</a>
+        </nav>
+    </div>
+    <mat-tab-nav-panel #tabPanel>
+        <div class="content-with-tabs">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-tab-nav-panel>
+</div>

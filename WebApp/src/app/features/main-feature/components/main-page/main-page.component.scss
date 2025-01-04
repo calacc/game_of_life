@@ -1,0 +1,17 @@
+[mat-button] {
+  justify-content: flex-start;
+}
+
+.app-name-mobile {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 12px;
+}
+
+@media (min-width: 600px) {
+  .app-name-mobile {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 12px;
+  }
+}

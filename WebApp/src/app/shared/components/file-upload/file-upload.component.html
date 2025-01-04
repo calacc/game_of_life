@@ -1,0 +1,29 @@
+<div class="flex items-center justify-center w-full">
+    <label class="flex flex-col items-center justify-center w-full h-52 border-2 border-dashed rounded-2xl cursor-pointer "
+           for="dropzone-file"
+           id="zone">
+        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+            <mat-icon class="zone-text-color scale-150 mb-4 text-primary ">upload</mat-icon>
+            <p class="zone-text-color mb-2 text-sm text-primary"><span class="font-medium">Click to upload</span> or
+                drag and drop</p>
+            <p class="text-xs">{{ detail }}</p>
+        </div>
+        <input #fileInput (change)="onFileInputChange($event)" [accept]="accept" class="hidden" id="dropzone-file"
+               type="file"/>
+    </label>
+</div>
+
+<ng-container *ngFor="let file of files; let i = index">
+    <div class="mt-4 p-2 border-1 rounded-2xl flex items-center">
+        <div class="flex items-center justify-center mr-3 min-w-5">
+            <mat-icon class="text-primary">description</mat-icon>
+        </div>
+        <div class="mr-4 break-all">{{ file.name }}</div>
+        <div class="ml-auto min-w-24">
+            <button (click)="deleteFile(fileInput, i)" mat-button>
+                <mat-icon>delete</mat-icon>
+                Delete
+            </button>
+        </div>
+    </div>
+</ng-container>

@@ -1,0 +1,144 @@
+<div [@fadeInAnimation] [style.width]="tableWidth">
+    <!-- Table tools -->
+    <div class="pt-4 pl-4 pr-4 flex-col inline-block sticky sticky-left">
+        <!-- General tools -->
+        <div class="flex responsive-flex">
+            <mat-form-field class="mr-4">
+                <mat-label>Search</mat-label>
+                <input (keyup)="applySearch($event)"
+                       [formControl]="search"
+                       [matAutocomplete]="auto"
+                       aria-label="Number"
+                       matInput
+                       type="text">
+                @if (search.value) {
+                    <button matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                } @else {
+                    <button matSuffix class="invisible" mat-icon-button >
+                        <mat-icon>close</mat-icon>
+                    </button>
+                }
+                <mat-icon matPrefix>search</mat-icon>
+                <mat-autocomplete (optionSelected)="applyAutocompleteSelect($event)" #auto="matAutocomplete" autoActiveFirstOption>
+                    @for (option of filteredOptions | async; track option) {
+                        <mat-option [value]="option">{{ option }}</mat-option>
+                    }
+                </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field class="mr-4">
+                <mat-label>Filter</mat-label>
+                <mat-icon matPrefix>tune</mat-icon>
+                @if (filter.value) {
+                    <button matSuffix mat-icon-button aria-label="Clear" (click)="clearFilter()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                } @else {
+                    <button matSuffix class="invisible" mat-icon-button >
+                        <mat-icon>close</mat-icon>
+                    </button>
+                }
+                <mat-select (selectionChange)="applyCategoryFilter($event)" [formControl]="filter" multiple>
+                    <mat-select-trigger>
+                        {{ filter.value?.[0] || '' }}
+                        @if ((filter.value?.length || 0) > 1) {
+                            <span class="example-additional-selection">
+          (+{{ (filter.value?.length || 0) - 1 }} {{ filter.value?.length === 2 ? 'other' : 'others' }})
+        </span>
+                        }
+                    </mat-select-trigger>
+                    @for (category of categories; track category.id) {
+                        <mat-option [value]="category.name">{{ category.name }}</mat-option>
+                    }
+                </mat-select>
+
+            </mat-form-field>
+
+        </div>
+        <div class="flex">
+            <button (click)="openAddModal(categories)" mat-flat-button>
+                <mat-icon>add</mat-icon>
+                Add
+            </button>
+            <button class="ml-4" mat-stroked-button>Order Elements</button>
+        </div>
+        <div class="mt-4">
+            <button (click)="resetData()" [class.spinner]="resetDataSpinner$ | async"
+                    [disabled]="resetDataSpinner$ | async" mat-stroked-button>Reset Data
+            </button>
+        </div>
+        <!-- Paginator -->
+        <div class="inline-block sticky sticky-left self-center mt-4">
+            <mat-paginator [pageSizeOptions]="[25, 10, 5]" aria-label="Select page of users"></mat-paginator>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="sticky-table-header table-padding z-10 mb-8">
+        <table [dataSource]="dataSource" [width]="'900px'" id="table" mat-table matSort>
+
+            <ng-container matColumnDef="position">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header sortActionDescription="Sort by number"> No.</th>
+                <td *matCellDef="let element" mat-cell> {{ element.position }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="name" sticky>
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> Name</th>
+                <td *matCellDef="let element" mat-cell> {{ element.name }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="weight">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> Weight</th>
+                <td *matCellDef="let element" mat-cell> {{ element.weight }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="symbol">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> Symbol</th>
+                <td *matCellDef="let element" mat-cell> {{ element.symbol }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="density">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> Density</th>
+                <td *matCellDef="let element" mat-cell> {{ element.density }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="meltingPoint">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> Melting Point</th>
+                <td *matCellDef="let element" mat-cell> {{ element.meltingPoint }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="boilingPoint">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> Boiling Point</th>
+                <td *matCellDef="let element" mat-cell> {{ element.boilingPoint }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="atomicRadius">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> Atomic Radius</th>
+                <td *matCellDef="let element" mat-cell> {{ element.atomicRadius }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="categoryName">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> Category</th>
+                <td *matCellDef="let element" mat-cell> {{ element.categoryName }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <th *matHeaderCellDef mat-header-cell></th>
+                <td *matCellDef="let element" mat-cell>
+                    <div class="flex">
+                        <app-is-visible-button [element]="element"></app-is-visible-button>
+                        <button (click)="openEditModal(element.element, categories)" mat-icon-button>
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button (click)="openDeleteModal(element)" mat-icon-button>
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </td>
+            </ng-container>
+            <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
+            <tr *matRowDef="let row; columns: displayedColumns; " mat-row></tr>
+        </table>
+    </div>
+</div>

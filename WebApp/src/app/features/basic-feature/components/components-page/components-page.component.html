@@ -1,0 +1,28 @@
+<div [@fadeInAnimation] class="p-4">
+    <div class="flex flex-col gap-4">
+        <app-reposition-overlay></app-reposition-overlay>
+        <app-close-on-scroll-overlay></app-close-on-scroll-overlay>
+        <div>
+            <button (click)="startLoading()" [class.spinner]="loadingButton$ | async"
+                    [disabled]="loadingButton$ | async"
+                    mat-flat-button>Loading Button
+            </button>
+        </div>
+        <div>
+            <button (click)="openDialog()" mat-button>Open Dialog</button>
+        </div>
+        <div>
+            <button (click)="openFullscreenDialog()" mat-button>Open Fullscreen Dialog</button>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <app-single-image-upload (uploadChange)="logImageUpload($event)"></app-single-image-upload>
+    </div>
+
+    <div class="mt-4 mb-16">
+        <app-file-upload (uploadChange)="logFileUpload($event)"></app-file-upload>
+    </div>
+
+
+</div>

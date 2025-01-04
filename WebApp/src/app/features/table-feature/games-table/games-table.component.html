@@ -1,0 +1,85 @@
+<div [@fadeInAnimation] [style.width]="tableWidth">
+    <!-- Table tools -->
+    <div class="pt-4 pl-4 pr-4 flex-col inline-block sticky sticky-left">
+        <!-- General tools -->
+        <div class="flex responsive-flex">
+            <mat-form-field class="mr-4">
+                <mat-label>Search</mat-label>
+                <input (keyup)="applySearch($event)"
+                       [formControl]="search"
+                       aria-label="Number"
+                       matInput
+                       type="text">
+                @if (search.value) {
+                    <button matSuffix mat-icon-button aria-label="Clear">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                } @else {
+                    <button matSuffix class="invisible" mat-icon-button >
+                        <mat-icon>close</mat-icon>
+                    </button>
+                }
+                <mat-icon matPrefix>search</mat-icon>
+   
+            </mat-form-field>
+
+
+        </div>
+        
+        <!-- Paginator -->
+        <div class="inline-block sticky sticky-left self-center mt-4">
+            <mat-paginator [pageSizeOptions]="[25, 10, 5]" aria-label="Select page of users"></mat-paginator>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="sticky-table-header table-padding z-10 mb-8">
+        <table [dataSource]="dataSource" [width]="'900px'" id="table" mat-table matSort>
+
+            <ng-container matColumnDef="id">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header sortActionDescription="Sort by number">Id</th>
+                <td *matCellDef="let element" mat-cell> {{ element.id }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="started" sticky>
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> Started</th>
+                <td *matCellDef="let element" mat-cell> {{ element.started }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="startingNrSexualCells">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> Starting Sexual Cells</th>
+                <td *matCellDef="let element" mat-cell> {{ element.startingNrSexualCells }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="startingNrAsexualCells">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> Starting Asexual Cells</th>
+                <td *matCellDef="let element" mat-cell> {{ element.startingNrAsexualCells }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="startingNrResources">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> Starting Resources</th>
+                <td *matCellDef="let element" mat-cell> {{ element.startingNrResources }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="mapSize">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> Map Size</th>
+                <td *matCellDef="let element" mat-cell> {{ element.mapSize }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="endNrResources">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> End Resources</th>
+                <td *matCellDef="let element" mat-cell> {{ element.endNrResources }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="endNrCells">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> End Cells</th>
+                <td *matCellDef="let element" mat-cell> {{ element.endNrCells }}</td>
+            </ng-container>
+            
+            
+            <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
+            <tr *matRowDef="let row; columns: displayedColumns; " mat-row></tr>
+        </table>
+    </div>
+</div>
+

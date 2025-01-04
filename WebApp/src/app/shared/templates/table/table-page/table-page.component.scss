@@ -1,0 +1,10 @@
+.responsive-flex {
+  flex-wrap: wrap;
+}
+
+@media (max-width: 900px) {
+  .responsive-flex {
+    flex-wrap: nowrap;
+    flex-direction: column;
+  }
+}

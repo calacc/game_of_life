@@ -1,0 +1,21 @@
+<mat-dialog-content>
+    <div class="pl-4 pr-4 fullscreen-dialog">
+        <div class="flex items-center mat-toolbar-height">
+            <div class="ml-auto">
+                <button (click)="closeDialog()" mat-icon-button>
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="max-w-xl m-auto flex flex-col min-h-dvh-minus-toolbar">
+            <div class="text-2xl">Dialog title</div>
+            <div class="pt-4 pb-4">Dialog Content</div>
+            <div class="flex mb-16 mt-auto justify-end">
+                <div class="ml-auto">
+                    <button (click)="closeDialog()" class="mr-2" mat-button>No Thanks</button>
+                    <button (click)="closeDialog()" mat-button>Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>

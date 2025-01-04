@@ -1,0 +1,315 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* SECTION 1: Material Overrides */
+// 1.1 Dialog Overrides
+.fullscreen-dialog .mat-mdc-dialog-surface {
+  border-radius: 0 !important;
+}
+
+.fullscreen-dialog .mat-mdc-dialog-container, .mat-mdc-dialog-content {
+  height: 100% !important;
+  width: 100% !important;
+  max-height: 100% !important;
+}
+
+.mat-mdc-dialog-content:has(.fullscreen-dialog) {
+  padding: 0 !important;
+}
+
+.mat-mdc-dialog-surface:has(.fullscreen-dialog) {
+  border-radius: 0 !important;
+}
+
+
+.navigation-buttons .mdc-button {
+  justify-content: start !important;
+}
+
+// 1.2 Paginator Overrides
+.mat-mdc-paginator-range-label {
+  margin: 0 !important;
+  width: 5rem !important;
+}
+
+.mat-mdc-paginator-container {
+  padding: 0 !important;
+}
+
+// 1.3 Drawer Overrides
+mat-drawer {
+  background: var(--color-surface) !important;
+  border-radius: 0px !important;
+  width: 250px !important;
+}
+
+mat-drawer-content {
+  scroll-behavior: auto !important;
+  overflow-y: scroll !important;
+  background-color: var(--color-surface) !important;
+}
+
+// 1.4 Overlay Overrides
+.cdk-overlay-container:has(.mat-mdc-dialog-container, .mat-datepicker-dialog, .mat-datepicker-popup) {
+  z-index: 3000 !important;
+}
+
+.cdk-overlay-dark-backdrop:has(+ div .overlay-pane) {
+  background: rgba(0, 0, 0, 0.0) !important;
+}
+
+.cdk-overlay-backdrop:has(+ div .overlay-pane) {
+  transition: none !important;
+}
+
+// 1.5 Other Overrides
+form mat-form-field {
+  margin-bottom: 1rem;
+}
+
+.mdc-notched-outline__notch {
+  border-right: none;
+}
+
+mat-toolbar {
+  background: var(--color-surface) !important;
+  border-bottom: 1px solid var(--color-border) !important;
+}
+
+.mat-mdc-snackbar-surface {
+  white-space: pre-wrap
+}
+
+.mat-mdc-table-sticky {
+  left: 250px !important;
+}
+
+@media (max-width: 900px) {
+  .mat-mdc-table-sticky {
+    left: 0px !important;
+  }
+}
+
+/* SECTION 2 Utility Classes */
+// 1.1 Color Classes
+.text-black {
+  color: black !important;
+}
+
+.text-error {
+  color: var(--color-error) !important;
+}
+
+.text-primary {
+  color: var(--color-primary)
+}
+
+.bg-primary {
+  background-color: var(--color-primary) !important;
+}
+
+.bg-surface {
+  background-color: var(--color-surface) !important;
+}
+
+.text-surface {
+  color: var(--color-surface) !important;
+}
+
+.active-link {
+  background-color: var(--color-primary-100) !important;
+}
+
+.overlay-pane {
+  box-shadow: var(--overlay-boxshadow);
+  background: var(--overlay-background);
+}
+
+// 1.2 Link Classes
+.link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.link {
+  font-weight: 500;
+}
+
+// 1.3 Other Classes
+.mat-toolbar-height {
+  height: 64px;
+}
+
+.z-2000 {
+  z-index: 2000 !important;
+}
+
+// 1.4 Shake Animation
+@keyframes shake {
+  0% {
+    transform: translate(15px);
+  }
+  20% {
+    transform: translate(-15px);
+  }
+  40% {
+    transform: translate(7px);
+  }
+  60% {
+    transform: translate(-7px);
+  }
+  80% {
+    transform: translate(4px);
+  }
+  100% {
+    origin-transform: translate(0px);
+  }
+}
+
+.shake {
+  animation: shake 0.4s 1 linear;
+}
+
+// 1.5 Button Spinner
+.spinner:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  border-top-color: #000000;
+  animation: spinner .8s linear infinite;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsive Classes
+.visible-mobile {
+  display: none !important;
+}
+
+.visible-desktop {
+  display: block !important;
+}
+
+.visible-desktop-flex {
+  display: inline-flex !important;
+}
+
+// Other Classes
+.min-h-dvh-minus-toolbar {
+  min-height: calc(100dvh - var(--toolbar-height))
+}
+
+#desktop-drawer {
+  //border-right: 1px solid var(--color-border) !important;
+  background-color: var(--inverse-on-surface) !important;
+}
+
+.fixed-tabs {
+  width: calc(100% - 250px) !important;
+  position: fixed;
+  top: 64px;
+  background-color: var(--color-surface)
+}
+
+.h-full-minus-toolbar {
+  min-height: calc(100dvh - 64px);
+}
+
+.sticky-table-header thead {
+  position: sticky !important;
+  z-index: 30;
+  top: 112px;
+}
+
+.w-full-toolbar {
+  width: calc(100% - 250px) !important;
+}
+
+.desktop-drawer-width {
+  width: 250px;
+}
+
+.padding-for-desktop-drawer {
+  padding-left: 250px;
+}
+
+.sticky-left {
+  left: 250px;
+}
+
+.padding-sides-desktop {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+// Router Outlet Wrappers
+.content-with-toolbar {
+  padding-top: 64px;
+}
+
+.content-with-tabs {
+  padding-top: 48px;
+}
+
+// Mobile Overrides
+@media (max-width: 900px) {
+  .sticky-left {
+    left: 0px;
+  }
+  .padding-sides-desktop {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .visible-mobile {
+    display: block !important;
+  }
+  .visible-desktop {
+    display: none !important;
+  }
+  .visible-desktop-flex {
+    display: none !important;
+  }
+  .fixed-tabs {
+    width: 100% !important;
+  }
+  .w-full-toolbar {
+    width: 100% !important;
+  }
+  .padding-for-desktop-drawer {
+    padding-left: 0;
+  }
+}
+
+// MatToolbar Overrides (When the toolbar is 56px not 64px)
+@media (max-width: 599px) {
+  .mat-toolbar-height {
+    height: 56px;
+  }
+  .fixed-tabs {
+    top: 56px;
+    position: fixed;
+  }
+  .h-full-minus-toolbar {
+    min-height: calc(100dvh - 56px);
+  }
+  .sticky-table-header thead {
+    top: 105px;
+  }
+  .content-with-toolbar {
+    padding-top: 56px;
+  }
+}
+

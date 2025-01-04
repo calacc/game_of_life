@@ -1,0 +1,14 @@
+<button #trigger="cdkOverlayOrigin" (click)="isOpen = !isOpen" cdkOverlayOrigin mat-stroked-button type="button">
+    {{ isOpen ? "Scroll to close" : "Open Close-on-Scroll Overlay" }}
+</button>
+<ng-template
+        (detach)="onOverlayClose()"
+        [cdkConnectedOverlayOpen]="isOpen"
+        [cdkConnectedOverlayOrigin]="trigger"
+        [cdkConnectedOverlayScrollStrategy]="closeScrollStrategy"
+        cdkConnectedOverlay
+>
+    <div class="overlay-pane h-64 w-64 flex items-center justify-center">
+        <div>Overlay Content</div>
+    </div>
+</ng-template>

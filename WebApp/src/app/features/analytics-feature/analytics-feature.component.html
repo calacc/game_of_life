@@ -1,0 +1,25 @@
+<ng-container *ngIf="(spinner$ | async) === false">
+    <div>
+        <div class="fixed-tabs z-2000">
+            <nav [@fadeInAnimation] [tabPanel]="tabPanel" mat-align-tabs="start" mat-stretch-tabs="false"
+                 mat-tab-nav-bar>
+                <a (click)="goTo('/analytics/games', 'games')"
+                   [active]="(activeTab$ | async) === 'games'"
+                   mat-tab-link
+                >Games</a>
+                <a (click)="goTo('/analytics/cells', 'cells')"
+                   [active]="(activeTab$ | async) === 'cells'"
+                   mat-tab-link
+                >Cells</a>
+            </nav>
+        </div>
+        <mat-tab-nav-panel #tabPanel>
+            <div class="content-with-tabs">
+                <router-outlet></router-outlet>
+            </div>
+        </mat-tab-nav-panel>
+    </div>
+</ng-container>
+<ng-container *ngIf="(spinner$ | async)">
+    <app-toolbar-loading-page></app-toolbar-loading-page>
+</ng-container>

@@ -1,0 +1,90 @@
+<mat-dialog-content>
+    <div class="pl-4 pr-4 fullscreen-dialog">
+        <div class="flex items-center mat-toolbar-height">
+            <div class="ml-auto">
+                <button (click)="closeDialog()" mat-icon-button>
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="max-w-xl m-auto flex flex-col min-h-dvh-minus-toolbar">
+            <div class="text-2xl">Add Element</div>
+            <form #formAutoFocus="appModalFormAutoFocus" (keydown.enter)="$event.preventDefault()" [formGroup]="form"
+                  appModalFormAutoFocus class="flex flex-col">
+                <div class="text-xl border-b-2 mb-4 mt-4 pb-2">Overview</div>
+                <!-- Text Input -->
+                <mat-form-field class="w-full">
+                    <mat-label>Name</mat-label>
+                    <input formControlName="name" inputmode="text" matInput type="text">
+                    <mat-error *ngIf="form.controls.name.hasError('required')">
+                        Name is required
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Category Select -->
+                <div>
+                    <mat-form-field>
+                        <mat-label>Category</mat-label>
+                        <mat-select formControlName="categoryId">
+                            <mat-option *ngFor="let category of selectOptions" [value]="category.id">
+                                {{ category.name }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="form.controls.categoryId.hasError('required')">
+                            Category is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <!-- Symbol Input -->
+                <mat-form-field class="w-full">
+                    <mat-label>Symbol</mat-label>
+                    <input formControlName="symbol" inputmode="text" matInput type="text">
+                    <mat-error *ngIf="form.controls.symbol.hasError('required')">
+                        Symbol is required
+                    </mat-error>
+                </mat-form-field>
+
+                <div class="text-xl border-b-2 mb-4 mt-4 pb-2">Physical Properties</div>
+                <!-- Number Input -->
+                <mat-form-field class="w-full">
+                    <mat-label>Weight</mat-label>
+                    <input formControlName="weight" inputmode="numeric" matInput type="number">
+                </mat-form-field>
+
+                <!-- Density -->
+                <mat-form-field class="w-full">
+                    <mat-label>Density</mat-label>
+                    <input formControlName="density" inputmode="numeric" matInput type="number">
+                </mat-form-field>
+
+                <!-- Melting Point -->
+                <mat-form-field class="w-full">
+                    <mat-label>Melting Point</mat-label>
+                    <input formControlName="meltingPoint" inputmode="numeric" matInput type="number">
+                </mat-form-field>
+
+                <!-- Boiling Point -->
+                <mat-form-field class="w-full">
+                    <mat-label>Boiling Point</mat-label>
+                    <input formControlName="boilingPoint" inputmode="numeric" matInput type="number">
+                </mat-form-field>
+
+                <!-- Atomic Radius -->
+                <mat-form-field class="w-full">
+                    <mat-label>Atomic Radius</mat-label>
+                    <input formControlName="atomicRadius" inputmode="numeric" matInput type="number">
+                </mat-form-field>
+            </form>
+            <div class="flex mb-16 mt-auto justify-end">
+                <div class="ml-auto">
+                    <button (click)="closeDialog()" class="mr-2" mat-button>Cancel</button>
+                    <button (click)="submit(); formAutoFocus.focus()" [class.shake]="shake$ | async"
+                            [class.spinner]="loading$ | async"
+                            [disabled]="loading$ | async" mat-button>Save
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</mat-dialog-content>

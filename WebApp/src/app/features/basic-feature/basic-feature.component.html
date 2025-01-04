@@ -1,0 +1,24 @@
+<div>
+    <div [@fadeInAnimation] class="fixed-tabs z-2000">
+        <nav  [tabPanel]="tabPanel" mat-align-tabs="start" mat-stretch-tabs="false"
+             mat-tab-nav-bar>
+            <a (click)="goTo('/basic/form', 'form')"
+               [active]="(activeTab$ | async) === 'form'"
+               mat-tab-link
+            >Form</a>
+            <a (click)="goTo('/basic/components', 'components')"
+               [active]="(activeTab$ | async) === 'components'"
+               mat-tab-link
+            >Components</a>
+            <a (click)="goTo('/basic/media', 'components')"
+               [active]="(activeTab$ | async) === 'media'"
+               mat-tab-link
+            >Media</a>
+        </nav>
+    </div>
+    <mat-tab-nav-panel #tabPanel>
+        <div class="content-with-tabs">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-tab-nav-panel>
+</div>

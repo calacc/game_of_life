@@ -2,7 +2,6 @@ import { inject, Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { EnvironmentService } from '../../../services/environment/environment.service'
 
-
 @Injectable({
     providedIn: 'root',
 })
@@ -18,7 +17,12 @@ export class TestService {
     getUnprotected() {
         return this.http.get(`${this.baseUrl}/GetUnprotected`)
     }
+
     getProtected() {
         return this.http.get(`${this.baseUrl}/GetProtected`)
+    }
+
+    getAdminProtected() {
+        return this.http.get(`${this.baseUrl}/GetAdminProtected`)
     }
 }

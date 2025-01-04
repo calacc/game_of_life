@@ -1,0 +1,191 @@
+<mat-dialog-content>
+    <div class="pl-4 pr-4 fullscreen-dialog">
+        <div class="flex items-center mat-toolbar-height">
+            <div class="ml-auto">
+                <button (click)="closeDialog()" mat-icon-button>
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="max-w-xl m-auto flex flex-col min-h-dvh-minus-toolbar">
+            <div class="text-2xl">Form Title</div>
+            <form #formAutoFocus="appModalFormAutoFocus" (keydown.enter)="$event.preventDefault()" [formGroup]="form"
+                  appModalFormAutoFocus class="flex flex-col">
+                <div class="text-xl border-b-2 mb-4 mt-4 pb-2">Inputs Section</div>
+                <!-- Text Input -->
+                <mat-form-field class="w-full">
+                    <mat-label>Input 1</mat-label>
+                    <input formControlName="input1" inputmode="text" matInput type="text">
+                    @if (form.controls.input1.hasError('required')) {
+                        <mat-error>Input 1 is required</mat-error>
+                    }
+                </mat-form-field>
+                <!-- Number Input -->
+                <mat-form-field class="w-full">
+                    <mat-label>Input 2</mat-label>
+                    <input formControlName="input2" inputmode="numeric" matInput type="number">
+                    @if (form.controls.input2.hasError('required')) {
+                        <mat-error>Input 2 is required</mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Autocomplete</mat-label>
+                    <input [matAutocomplete]="auto"
+                           aria-label="Number"
+                           formControlName="autocomplete"
+                           matInput
+                           placeholder="Pick one"
+                           type="text">
+                    <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption>
+                        @for (option of filteredOptions | async; track option) {
+                            <mat-option [value]="option">{{ option }}</mat-option>
+                        }
+                    </mat-autocomplete>
+                </mat-form-field>
+
+                <div class="text-xl border-b-2 mb-4 mt-4 pb-2">Selects Section</div>
+                <!-- Select -->
+                <div>
+                    <mat-form-field>
+                        <mat-label>Select</mat-label>
+                        <mat-select formControlName="select">
+                            @for (option of selectOptions$ | async; track option) {
+                                <mat-option [value]="option">{{ option }}</mat-option>
+                            }
+
+                        </mat-select>
+                        @if (form.controls.select.hasError('required')) {
+                            <mat-error>Select is required</mat-error>
+                        }
+                    </mat-form-field>
+                    <button (click)="openDialog()" class="relative bottom-2 ml-2" mat-button type="button">Add
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+                <!-- Multiple Select -->
+                <mat-form-field>
+                    <mat-label>Multiple Select</mat-label>
+                    <mat-select formControlName="multipleSelect" multiple>
+                        <mat-select-trigger>
+                            {{ form.controls.multipleSelect.value?.[0] || '' }}
+                            @if ((form.controls.multipleSelect.value?.length || 0) > 1) {
+                                <span class="example-additional-selection">
+          (+{{ (form.controls.multipleSelect.value?.length || 0) - 1 }} {{ form.controls.multipleSelect.value?.length === 2 ? 'other' : 'others' }}
+                                    )
+        </span>
+                            }
+                        </mat-select-trigger>
+                        <mat-option value="one">First option</mat-option>
+                        <mat-option value="two">Second option</mat-option>
+                        <mat-option value="three">Third option</mat-option>
+                        <mat-option value="one">First option</mat-option>
+                        <mat-option value="two">Second option</mat-option>
+                        <mat-option value="three">Third option</mat-option>
+                        <mat-option value="one">First option</mat-option>
+                        <mat-option value="two">Second option</mat-option>
+                        <mat-option value="three">Third option</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <!-- Datepicker -->
+                <div>
+                    <mat-form-field>
+                        <mat-label>Choose a date</mat-label>
+                        <input [matDatepicker]="picker" formControlName="date" matInput>
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        @if (form.controls.date.hasError('required')) {
+                            <mat-error>Date is required</mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+
+                <div class="text-xl border-b-2 mb-4 mt-4 pb-2">Checkables Section</div>
+                <!-- Checkbox Group -->
+                <div class="mt-2 mb-4 ">
+                    <div class="text-base mb-1 pl-4 pr-4">Checkbox Group</div>
+                    <section class="pl-2 pr-2" formGroupName="checkboxes">
+                        <mat-checkbox formControlName="checkbox1">Check me!</mat-checkbox>
+                        <mat-checkbox formControlName="checkbox2">Check me!</mat-checkbox>
+                        <mat-checkbox formControlName="checkbox3">Check me!</mat-checkbox>
+                    </section>
+                </div>
+                <!-- Radio Group -->
+                <div class="mt-2 mb-4 ">
+                    <div class="text-base mb-1 pl-4 pr-4">Radio Group</div>
+                    <mat-radio-group aria-label="Select an option" class="pl-2 pr-2" formControlName="radio">
+                        <mat-radio-button value="1">No error</mat-radio-button>
+                        <mat-radio-button value="2">Show Error</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <!-- Checkbox List -->
+                <div class="mt-2 mb-4 ">
+                    <div class="text-base pl-4 pr-4">Checkbox List</div>
+                    <mat-selection-list formControlName="checkboxList">
+                        <mat-list-option value="option1">Option 1</mat-list-option>
+                        <mat-list-option value="option2">Option 2</mat-list-option>
+                        <mat-list-option value="option3">Option 3</mat-list-option>
+                    </mat-selection-list>
+                </div>
+
+                <!-- Radio List -->
+                <div class="mt-2 mb-4 ">
+                    <div class="text-base pl-4 pr-4">Radio List</div>
+                    <mat-selection-list [multiple]="false" formControlName="radioList">
+                        <mat-list-option value="option1">Option 1</mat-list-option>
+                        <mat-list-option value="option2">Option 2</mat-list-option>
+                    </mat-selection-list>
+                </div>
+
+                <!-- Slide Toggles -->
+                <div class="flex flex-col mt-2 mb-4 pl-4 pr-4" formGroupName="slideToggles">
+                    <div class="text-base mb-2">Slide Toggles</div>
+                    <mat-slide-toggle class="mb-4" formControlName="toggle1">Slide me 1!</mat-slide-toggle>
+                    <mat-slide-toggle class="mb-4" formControlName="toggle2">Slide me 2!</mat-slide-toggle>
+                </div>
+
+
+                <div class="text-xl border-b-2 mb-4 mt-4 pb-2">Special Section</div>
+                <!-- Text Area -->
+                <mat-form-field>
+                    <mat-label>Textarea</mat-label>
+                    <textarea [cdkTextareaAutosize] formControlName="textarea" matInput rows="5"></textarea>
+                    @if (form.controls.textarea.hasError('required')) {
+                        <mat-error>Textarea is required</mat-error>
+                    }
+                </mat-form-field>
+
+                <!-- Range -->
+                <div class="pl-4 pr-4">Select Range</div>
+                <mat-slider class="mb-4" discrete formGroupName="range" max="500" min="0" showTickMarks>
+                    <input formControlName="range1" matSliderStartThumb>
+                    <input formControlName="range2" matSliderEndThumb>
+                </mat-slider>
+
+                <!-- Required Checkbox -->
+                <div class="pl-2 pr-2 mb-4">
+                    <mat-checkbox formControlName="requiredCheckbox">Required Checkbox</mat-checkbox>
+                    <div class="pl-2 pr-2">
+                        @if (form.controls.requiredCheckbox.hasError('required') && !form.controls.requiredCheckbox.untouched) {
+                            <app-form-error>Checkbox is required</app-form-error>
+                        } @else {
+                            <app-form-error-placeholder></app-form-error-placeholder>
+                        }
+                    </div>
+
+                </div>
+            </form>
+            <div class="flex mb-16 mt-auto justify-end">
+                <div class="ml-auto">
+                    <button (click)="closeDialog()" class="mr-2" mat-button>No Thanks</button>
+                    <button (click)="submit(); formAutoFocus.focus()" [class.shake]="shake$ | async"
+                            [class.spinner]="loading$ | async"
+                            [disabled]="loading$ | async" mat-button>Ok
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+
+

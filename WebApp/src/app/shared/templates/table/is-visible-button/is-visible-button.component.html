@@ -1,0 +1,9 @@
+@if (element.isVisible) {
+    <button mat-icon-button [class.spinner]="spinner$ |async" [disabled]="spinner$ |async" (click)="makeInvisible()">
+        <mat-icon>visibility</mat-icon>
+    </button>
+} @else {
+    <button mat-icon-button [class.spinner]="spinner$ |async" [disabled]="spinner$ |async" (click)="makeVisible()">
+        <mat-icon>visibility_off</mat-icon>
+    </button>
+}

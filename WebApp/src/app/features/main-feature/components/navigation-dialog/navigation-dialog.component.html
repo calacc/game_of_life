@@ -1,0 +1,18 @@
+<div [@fadeInAnimation] class="h-full flex flex-col fullscreen-dialog">
+    <div class="flex items-center mat-toolbar-height p-4">
+        <div class="ml-auto">
+            <button (click)="closeDialog()" mat-icon-button>
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="p-4 flex flex-col grow">
+        <div class="flex items-center pl-4 mb-4">
+            <div class="text-3xl mr-1">{{ AppData.name }}</div>
+            <app-logo [heigth]="30" [width]="30"></app-logo>
+        </div>
+        <div [@fadeInAnimation] class="navigation-dialog flex flex-col grow w-100">
+            <app-navigation-buttons (onNavigate)="onNavigate()" class="h-full"></app-navigation-buttons>
+        </div>
+    </div>
+</div>
