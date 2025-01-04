@@ -1,0 +1,48 @@
+<div class="p-4 break-all">
+    <p>debug-feature works!</p>
+    <ng-container *ngIf="user$ |async as user">
+        <div class="mt-8">
+            <div class="text-lg mb-2">User data</div>
+            <div>
+                Id:
+                <strong>{{user.id}}</strong>
+            </div>
+            <div>
+                Email:
+                <strong>{{user.email}}</strong>
+            </div>
+            <div>
+                Provider:
+                <strong>{{user.provider}}</strong>
+            </div>
+            <div>
+                Created At:
+                <strong>{{user.createdAt}}</strong>
+            </div>
+        </div>
+    </ng-container>
+    <div class="mt-8">
+        <div class="text-lg ">Manage Tokens</div>
+        <div>
+            <button class="mt-2" (click)="removeAccessToken()" mat-stroked-button>Remove Access/Id Token</button>
+        </div>
+        <div>
+            <button  class="mt-2 " (click)="removeRefreshToken()" mat-stroked-button>Remove Refresh Token</button>
+        </div>
+    </div>
+    <div class="mt-8">
+        <div class="text-lg ">Test Requests</div>
+        <div>
+            <button class="mt-2" (click)="makeProtectedRequest()" mat-stroked-button>Make Request to Protected Endpoint</button>
+            <div class=" mt-2 ">Result: {{protectedResult$ | async}}</div>
+        </div>
+        <div>
+            <button  class="mt-2 " (click)="makeUnprotectedRequest()" mat-stroked-button>Make Request to Unprotected Endpoint</button>
+            <div class="mt-2 ">Result: {{unprotectedResult$ | async}}</div>
+        </div>
+    </div>
+    <div class="mt-8">
+        <div class="text-lg ">Access Token</div>
+        <div>{{localStorage.getItem('access')}}</div>
+    </div>
+</div>

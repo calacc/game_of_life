@@ -69,6 +69,12 @@ public class GameOfLifeController {
         }
     }
 
+    @PostMapping("/closeGameOfLife")
+    public ResponseEntity<String> closeGameOfLife() {
+        this.gameOfLifeService.resetGameOfLife();
+        return ResponseEntity.ok("Game of life has been closed");
+    }
+
     @PostMapping("/save")
     public GameOfLifeEntity saveGame() {
         GameOfLife gameOfLife = gameOfLifeService.getGameOfLife();
