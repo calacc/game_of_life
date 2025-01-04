@@ -1,0 +1,49 @@
+<div class="flex flex-col m-auto max-w-sm w-full pl-4 pr-4" onclick="">
+    <div class="text-4xl title mb-8">Log in to Application</div>
+    <form (ngSubmit)="submit()" [formGroup]="form" class="flex flex-col">
+
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input formControlName="email" matInput>
+            @if (form.controls['email'].hasError('email') && !form.controls['email'].hasError('required')) {
+                <mat-error>Please enter a valid email address</mat-error>
+            }
+            @if (form.controls['email'].hasError('required')) {
+                <mat-error>Email is required</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input [type]="(visiblePassword$ | async) ? 'text' : 'password'" formControlName="password" matInput />
+            <button
+
+                (click)="togglePasswordVisibility()"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="(visiblePassword$ | async)"
+                mat-icon-button
+                matSuffix
+                type="button"
+            >
+                <mat-icon>{{ (visiblePassword$ | async) ? 'visibility' : 'visibility_off' }}</mat-icon>
+            </button>
+            @if (form.controls['password'].hasError('minlength') && !form.controls['password'].hasError('required')) {
+                <mat-error>Needs to be at least 6 characters</mat-error>
+            }
+            @if (form.controls['password'].hasError('required')) {
+                <mat-error>Password is required</mat-error>
+            }
+        </mat-form-field>
+
+        <button [class.shake]="shake$ | async" [class.spinner]="disabled$ | async" [disabled]="disabled$ | async"
+                mat-flat-button type="submit">Log in
+        </button>
+        <div class="link w-max mt-3" routerLink="/private/auth/reset-password">Forgot your password?</div>
+    </form>
+
+    <app-divider></app-divider>
+    <div class="flex justify-center flex-wrap items-center gap-x-1">
+        <div>Don't have an account?</div>
+        <div class="link w-max" routerLink="/private/auth/signup">Sign up here</div>
+    </div>
+</div>
