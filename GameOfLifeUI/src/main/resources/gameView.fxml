@@ -5,13 +5,14 @@
 
 <Pane fx:id="cellsContainer" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="com.example.gameoflifeui.GameController">
    <children>
-      <!-- Pane for dyanamic content -->
+      <!-- Pane for dynamic content -->
       <Pane fx:id="dynamicContentPane" layoutY="0.0" prefHeight="276.0" prefWidth="600.0" />
 
       <!-- Pane for static content -->
       <Pane layoutY="276.0" prefHeight="124.0" prefWidth="600.0">
          <children>
-            <Button fx:id="pauseGameButton" layoutX="259.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Pause" onAction="#pauseGame" />
+            <Button fx:id="pauseGameButton" layoutX="200.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Pause" onAction="#pauseGame" />
+            <Button fx:id="startGameButton" layoutX="300.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Start" onAction="#startGame" />
          </children>
       </Pane>
    </children>

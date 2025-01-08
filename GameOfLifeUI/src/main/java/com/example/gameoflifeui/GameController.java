@@ -89,6 +89,27 @@ public class GameController {
     }
 
     @FXML
+    private void startGame() {
+        // Send API call to start the game
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(BASE_URL + "/startGameOfLife"))
+                    .PUT(HttpRequest.BodyPublishers.noBody())
+                    .build();
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                // Start the game loop
+                if (gameLoop != null) {
+                    gameLoop.play();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     private void updateGameState() {
         // Fetch the updated game state from the backend
         GameState gameState = getGameState();

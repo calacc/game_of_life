@@ -71,18 +71,6 @@ public class MainController {
                 // Open the game window
                 openGameWindow();
 
-                request = HttpRequest.newBuilder()
-                        .uri(URI.create(BASE_URL + "/startGameOfLife"))
-                        .PUT(HttpRequest.BodyPublishers.noBody())
-                        .build();
-                response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-//                if (response.statusCode() == 200)
-//                {
-//                    openGameWindow();
-//                    gameController.setupGameLoop();
-//                }
-
             } else {
                 System.err.println("Failed to start a new game.");
             }
