@@ -29,7 +29,7 @@ export class GameChartsComponent {
     cells: CellDto[] = []
     @ViewChild('cellChart1') canvasRef!: ElementRef<HTMLCanvasElement>
     @ViewChild('cellChart2') canvasRef2!: ElementRef<HTMLCanvasElement>
-    @ViewChild('cellChart2') canvasRef3!: ElementRef<HTMLCanvasElement>
+    @ViewChild('cellChart3') canvasRef3!: ElementRef<HTMLCanvasElement>
     chart!: Chart
     chart2!: Chart
     chart3!: Chart
@@ -44,62 +44,47 @@ export class GameChartsComponent {
     }
 
     computeTotalResourceConsumption() {
-        // Initialize an array to hold the total resource consumption for each game
         const totalConsumptionPerGame: {
             gameId: number
             totalConsumed: number
         }[] = []
-
-        // Iterate through each game to compute the total resources consumed
         this.games.forEach((game) => {
             let totalConsumed = 0
-
-            // For each resource, count how many cells are consuming it
             game.resources.forEach((resource) => {
                 const nearbyCells = this.cells.filter((cell) => {
-                    // Calculate distance between cell and resource
                     const distance = Math.sqrt(
                         Math.pow(cell.x - resource.row, 2) +
                             Math.pow(cell.y - resource.col, 2)
                     )
-                    return distance <= 2 // Threshold distance for consumption
+                    return distance <= 2
                 })
-
-                // If there are cells near the resource, add to total consumption
                 totalConsumed += nearbyCells.length
             })
-
-            // Store the total consumption for this game
             totalConsumptionPerGame.push({
                 gameId: game.id,
                 totalConsumed,
             })
         })
-
-        // Return the computed data for use in chart
         return totalConsumptionPerGame
     }
 
     ngAfterViewInit(): void {
         const canvas = this.canvasRef.nativeElement
-        // Call the function to get total consumption data
-        const consumptionData = this.computeTotalResourceConsumption.call(this)
+        const canvas2 = this.canvasRef2.nativeElement
+        const canvas3 = this.canvasRef3.nativeElement
+        const densityData = this.computeCellDensity()
 
-        // Create the bar chart to visualize total resource consumption per game
-        this.chart = new Chart(canvas, {
+        // Create a bar chart for cell density
+        new Chart(canvas, {
             type: 'bar',
             data: {
-                labels: consumptionData.map(
-                    (data: { gameId: any }) => `Game ${data.gameId}`
-                ), // X-axis labels: Game identifiers
+                labels: densityData.map((data) => `Game ${data.gameId}`), // X-axis labels: Game identifiers
                 datasets: [
                     {
-                        label: 'Total Resources Consumed',
-                        data: consumptionData.map(
-                            (data: { totalConsumed: any }) => data.totalConsumed
-                        ), // Y-axis data: Total resources consumed
-                        backgroundColor: '#ff660080',
-                        borderColor: '#ff6600',
+                        label: 'Average Cell Density',
+                        data: densityData.map((data) => data.density),
+                        backgroundColor: '#4caf5080', // Semi-transparent green
+                        borderColor: '#4caf50', // Solid green border
                         borderWidth: 1,
                     },
                 ],
@@ -110,7 +95,13 @@ export class GameChartsComponent {
                         beginAtZero: true,
                         title: {
                             display: true,
-                            text: 'Total Resources Consumed',
+                            text: 'Density (Cells per Unit Area)',
+                        },
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Games',
                         },
                     },
                 },
@@ -120,13 +111,140 @@ export class GameChartsComponent {
                     },
                     tooltip: {
                         callbacks: {
-                            label: function (context: { raw: any }) {
-                                return `Consumed: ${context.raw} resources`
+                            label: function (context) {
+                                // @ts-ignore
+                                return `Density: ${context.raw.toFixed(3)} cells/unit²`
                             },
                         },
                     },
                 },
             },
         })
+        const totalCellsData = this.games.map((game) => ({
+            gameId: game.id,
+            totalCells: game.cells.length, // Number of cells in the cells array
+        }))
+
+        // Create a horizontal bar chart
+        new Chart(canvas2, {
+            type: 'bar',
+            data: {
+                labels: totalCellsData.map((data) => `Game ${data.gameId}`), // Labels for each game
+                datasets: [
+                    {
+                        label: 'Total Cells in Game',
+                        data: totalCellsData.map((data) => data.totalCells), // Number of cells
+                        backgroundColor: '#ff660090', // Green color
+                        borderColor: '#ff6600',
+                        borderWidth: 1,
+                    },
+                ],
+            },
+            options: {
+                indexAxis: 'y', // Horizontal bars
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Total Cells',
+                        },
+                    },
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function (context: { raw: any }) {
+                                return `Total Cells: ${context.raw}`
+                            },
+                        },
+                    },
+                },
+            },
+        })
+        const cellComparisonData = this.games.map((game) => ({
+            gameId: game.id,
+            initialSexual: game.startingNrSexualCells,
+            initialAsexual: game.startingNrAsexualCells,
+            finalCells: game.cells.length, // Final total number of cells
+        }))
+
+        // Create a grouped bar chart
+        new Chart(canvas3, {
+            type: 'bar',
+            data: {
+                labels: cellComparisonData.map((data) => `Game ${data.gameId}`), // X-axis labels: Game identifiers
+                datasets: [
+                    {
+                        label: 'Initial Sexual Cells',
+                        data: cellComparisonData.map(
+                            (data) => data.initialSexual
+                        ),
+                        backgroundColor: '#ff660090', // Blue color
+                        stack: 'Initial', // Group as "Initial"
+                    },
+                    {
+                        label: 'Initial Asexual Cells',
+                        data: cellComparisonData.map(
+                            (data) => data.initialAsexual
+                        ),
+                        backgroundColor: '#ab47bc90', // Purple color
+                        stack: 'Initial',
+                    },
+                    {
+                        label: 'Final Cells',
+                        data: cellComparisonData.map((data) => data.finalCells),
+                        backgroundColor: '#66bb6a90', // Green color
+                        stack: 'Final', // Separate group for "Final"
+                    },
+                ],
+            },
+            options: {
+                scales: {
+                    x: {
+                        stacked: true, // Enable stacking on the x-axis
+                        title: {
+                            display: true,
+                            text: 'Games',
+                        },
+                    },
+                    y: {
+                        beginAtZero: true,
+                        stacked: true, // Enable stacking on the y-axis
+                        title: {
+                            display: true,
+                            text: 'Number of Cells',
+                        },
+                    },
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function (context: {
+                                dataset: any
+                                raw: any
+                            }) {
+                                return `${context.dataset.label}: ${context.raw}`
+                            },
+                        },
+                    },
+                },
+            },
+        })
+    }
+    computeCellDensity() {
+        // Compute cell density per game
+        const densityData = this.games.map((game) => {
+            const totalCells = game.cells.length
+            const mapArea = game.mapSize * game.mapSize
+            const density = totalCells / mapArea
+
+            return {
+                gameId: game.id,
+                density: density, // Average density of cells
+            }
+        })
+
+        return densityData
     }
 }

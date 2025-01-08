@@ -1,5 +1,0 @@
-<div class="sticky top-0 z-50">
-    <mat-progress-bar *ngIf="loading$ | async" mode="indeterminate"></mat-progress-bar>
-    <mat-progress-bar *ngIf="(loading$ | async) === false" mode="determinate"></mat-progress-bar>
-</div>
-<router-outlet></router-outlet>

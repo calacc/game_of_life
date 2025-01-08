@@ -35,13 +35,7 @@ export const mainRoutes: Routes = [
                                 '../basic-feature/basic-feature.routes'
                             ).then((m) => m.basicFeatureRoutes),
                     },
-                    {
-                        path: 'debug',
-                        loadComponent: () =>
-                            import(
-                                '../debug-feature/debug-feature.component'
-                            ).then((m) => m.DebugFeatureComponent),
-                    },
+
                     {
                         path: 'analytics',
                         loadComponent: () =>

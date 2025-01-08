@@ -1,14 +1,17 @@
 <!--It needs to be cdkScrollable otherwise Overlay Scroll Strategies wont work properly-->
 <div [@fadeInAnimation] cdkScrollable class="h-full overflow-y-scroll" id="main">
     <!-- DRAWER -->
-    <div class="h-full fixed top-0 z-50 desktop-drawer-width  visible-desktop" id="desktop-drawer">
-        <div class="flex-col flex pl-2 pr-2 h-full">
-            <div class="pt-4 pb-4 pl-3 flex items-center">
-                <div class="text-2xl mr-1">{{AppData.name}}</div>
-                <app-logo [size]="24"></app-logo>
+
+    <div class="bg-surface h-full fixed top-0 z-50 desktop-drawer-width visible-desktop">
+        <div class="h-full fixed top-0 z-50 desktop-drawer-width  visible-desktop" id="desktop-drawer">
+            <div class="flex-col flex pl-2 pr-2 h-full">
+                <div class="pt-4 pb-4 pl-3 flex items-center">
+                    <div class="text-2xl mr-1">{{AppData.name}}</div>
+                    <app-logo [size]="24"></app-logo>
+                </div>
+                <app-navigation-buttons class="h-full"></app-navigation-buttons>
             </div>
-            <app-navigation-buttons class="h-full"></app-navigation-buttons>
-        </div>
+        </div> 
     </div>
     <!-- CONTENT -->
     <div class="min-h-full  padding-for-desktop-drawer">

@@ -38,7 +38,7 @@ $WebApp-theme: mat.define-theme((
   --color-surface-100: #{rgba(mat.get-theme-color($WebApp-theme, 'surface'), 0.1)};
   --color-error: #{rgba(mat.get-theme-color($WebApp-theme, 'error'), 0.8)};
   --color-border: #e5e7eb;
-  --inverse-on-surface: #{rgba(mat.get-theme-color($WebApp-theme, 'inverse-on-surface'), 1)};
+  --inverse-on-surface: #{rgba(mat.get-theme-color($WebApp-theme, 'surface-container-lowest'), 1)};
   --overlay-background: #{rgba(mat.get-theme-color($WebApp-theme, 'inverse-on-surface'), 1)};
   --toolbar-height: 64px;
   --overlay-boxshadow: var(--mat-select-container-elevation-shadow);

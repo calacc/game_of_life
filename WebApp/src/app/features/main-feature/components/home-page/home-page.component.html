@@ -1,3 +1,17 @@
-<app-page>
-    <p>home-page works!</p>
-</app-page>
+<div [@fadeInAnimation]>
+    <div class="w-full py-4 flex justify-center items-center">
+        <h1 class="text-3xl mr-4 font-medium">Download Game of Life</h1>
+        <app-logo [size]="32"></app-logo>
+    </div>
+
+    <main class="flex flex-col items-center gap-8 mb-8">
+        <button mat-flat-button>
+            Download for Windows
+            <mat-icon>window</mat-icon>
+        </button>
+    </main>
+    <div class="flex justify-center gap-4 flex-wrap">
+        <img class="h-64 rounded-xl" src="cell1.webp" alt="Cute Green Cell">
+        <img class="h-64 rounded-xl" src="cell2.webp" alt="Cute Green Cell">
+    </div>
+</div>
