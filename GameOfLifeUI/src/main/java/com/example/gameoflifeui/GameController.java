@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
@@ -30,9 +31,13 @@ public class GameController {
     private static String BASE_URL = "http://localhost:8080/game-of-life";
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
+    Timeline gameLoop;
 
     @FXML
     private Pane cellsContainer;
+
+    @FXML
+    private Pane dynamicContentPane;
 
     public GameController() {
         this.httpClient = HttpClient.newHttpClient();
@@ -58,9 +63,29 @@ public class GameController {
 
     public void setupGameLoop() {
         // Timeline to fetch game state periodically and update the UI
-        Timeline gameLoop = new Timeline(new KeyFrame(Duration.seconds(1), e -> updateGameState()));
+        gameLoop = new Timeline(new KeyFrame(Duration.seconds(1), e -> updateGameState()));
         gameLoop.setCycleCount(Timeline.INDEFINITE);
         gameLoop.play();
+    }
+    @FXML
+    private void pauseGame() {
+        // Send API call to stop the game
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(BASE_URL + "/stopGameOfLife"))
+                    .PUT(HttpRequest.BodyPublishers.noBody())
+                    .build();
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                // Pause the game loop
+                if (gameLoop != null) {
+                    gameLoop.stop();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -70,7 +95,7 @@ public class GameController {
 
         if (gameState != null) {
             // Clear the previous cells
-            cellsContainer.getChildren().clear();
+            dynamicContentPane.getChildren().clear();
 
             // Display each cell as a Label at the corresponding x, y position
             List<CellState> cells = Arrays.asList(gameState.activeCells);
@@ -87,7 +112,7 @@ public class GameController {
                     square.setFill(Color.ORANGE);
                 }
 
-                cellsContainer.getChildren().add(square);
+                dynamicContentPane.getChildren().add(square);
             }
             for (Resource resource : resources) {
                 Rectangle resourceSquare = new Rectangle(10, 10);
@@ -96,7 +121,7 @@ public class GameController {
                 resourceSquare.setX(resource.row * 10);
                 resourceSquare.setY(resource.col * 10);
 
-                cellsContainer.getChildren().add(resourceSquare);
+                dynamicContentPane.getChildren().add(resourceSquare);
             }
         }
     }
