@@ -14,6 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -163,7 +164,10 @@ public class GameController {
             Scene mainScene = new Scene(loader.load(), 800, 600);
             Stage mainStage = new Stage();
             mainStage.setScene(mainScene);
-            mainStage.setTitle("Main Page");
+            mainStage.setTitle("Game of Life");
+
+            mainStage.getIcons().add(new Image(getClass().getClassLoader().getResource("icons/logo.jpeg").toExternalForm()));
+
             mainStage.show();
 
             // Close the current game window
@@ -188,25 +192,52 @@ public class GameController {
             List<CellState> cells = Arrays.asList(gameState.activeCells);
             List<Resource> resources = Arrays.asList(gameState.resources);
 
+            // Calculate the grid width and height based on cell positions
+            int maxX = 0, maxY = 0;
+            for (CellState cell : cells) {
+                maxX = Math.max(maxX, cell.x);
+                maxY = Math.max(maxY, cell.y);
+            }
+            for (Resource resource : resources) {
+                maxX = Math.max(maxX, resource.row);
+                maxY = Math.max(maxY, resource.col);
+            }
+
+            // Get the width and height of the pane to center the cells
+            double paneWidth = dynamicContentPane.getPrefWidth();
+            double paneHeight = dynamicContentPane.getPrefHeight();
+
+            // Adjust the starting position for the center of the pane
+            double centerX = paneWidth / 2;
+            double centerY = paneHeight / 2;
+
+            // Determine the scale factor for positioning cells
+            double scaleX = (maxX > 0) ? (paneWidth / (maxX * 10)) : 1;
+            double scaleY = (maxY > 0) ? (paneHeight / (maxY * 10)) : 1;
+
             for (CellState cell : cells) {
                 Rectangle square = new Rectangle(10, 10);
                 square.setFill(Color.BLUE);
 
-                square.setX(cell.x * 10);
-                square.setY(cell.y * 10);
+                // Position the cell relative to the center of the panel with scaling
+                square.setX(centerX + (cell.x * 10) * scaleX - (maxX * 5 * scaleX));
+                square.setY(centerY + (cell.y * 10) * scaleY - (maxY * 5 * scaleY));
 
-                if(cell.state == State.HUNGRY) {
+                if (cell.state == State.HUNGRY) {
                     square.setFill(Color.ORANGE);
                 }
 
                 dynamicContentPane.getChildren().add(square);
             }
+
+            // Display resources as well
             for (Resource resource : resources) {
                 Rectangle resourceSquare = new Rectangle(10, 10);
                 resourceSquare.setFill(Color.GREEN);
 
-                resourceSquare.setX(resource.row * 10);
-                resourceSquare.setY(resource.col * 10);
+                // Position the resource relative to the center of the panel with scaling
+                resourceSquare.setX(centerX + (resource.row * 10) * scaleX - (maxX * 5 * scaleX));
+                resourceSquare.setY(centerY + (resource.col * 10) * scaleY - (maxY * 5 * scaleY));
 
                 dynamicContentPane.getChildren().add(resourceSquare);
             }

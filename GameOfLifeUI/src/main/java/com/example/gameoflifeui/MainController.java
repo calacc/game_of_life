@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
@@ -90,6 +91,9 @@ public class MainController {
             Stage gameStage = new Stage();
             gameStage.setScene(gameScene);
             gameStage.setTitle("Game of Life");
+
+            gameStage.getIcons().add(new Image(getClass().getClassLoader().getResource("icons/logo.jpeg").toExternalForm()));
+
             gameStage.show();
 
             // Close the main window
