@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -43,8 +44,10 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
             Stage stage = event.getStage();
             stage.setScene(new Scene(parent, 800, 600));
             stage.setTitle(applicationTitle);
-            stage.show();
 
+            stage.getIcons().add(new Image(getClass().getClassLoader().getResource("icons/logo.jpeg").toExternalForm()));
+
+            stage.show();
 
         } catch (IOException e) {
             throw new RuntimeException(e);

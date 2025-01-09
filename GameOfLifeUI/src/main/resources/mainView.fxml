@@ -2,20 +2,39 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
 
-<VBox alignment="CENTER" prefHeight="301.0" prefWidth="459.0" spacing="20" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gameoflifeui.MainController">
-    <Label style="-fx-font-size: 20px;" text="Welcome to Game of Life!" />
-   <Pane prefHeight="163.0" prefWidth="478.0">
-      <children>
-         <Label layoutX="14.0" text="Number of resources:" />
-         <TextField fx:id="resourcesField" layoutX="14.0" layoutY="17.0" prefHeight="17.0" prefWidth="51.0" />
+<VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0" spacing="20" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gameoflifeui.MainController">
 
-         <Label layoutX="14.0" layoutY="53.0" text="Number of sexual cells:" />
-         <TextField fx:id="sexualCellsField" layoutX="14.0" layoutY="70.0" prefHeight="25.0" prefWidth="51.0" />
+   <Label style="-fx-font-size: 25px; -fx-font-weight: bold;" text="Welcome to Game of Life!" />
 
-         <Label layoutX="14.0" layoutY="108.0" text="Number of asexual cells" />
-         <TextField fx:id="asexualCellsField" layoutX="14.0" layoutY="127.0" prefHeight="25.0" prefWidth="51.0" />
-      </children>
-   </Pane>
-    <Button fx:id="startGameButton" prefHeight="29.0" prefWidth="123.0" text="Create a new game" />
+   <ImageView fx:id="welcomeImage" fitHeight="150.0" fitWidth="150.0" preserveRatio="true">
+      <image>
+         <Image url="icons/logo.jpeg" />
+      </image>
+   </ImageView>
+
+   <Region prefHeight="20.0" />
+
+   <HBox spacing="20" alignment="CENTER">
+      <VBox alignment="CENTER">
+         <Label style="-fx-font-weight: bold;" text="Number of resources:" />
+         <TextField fx:id="resourcesField" prefHeight="25.0" prefWidth="51.0" />
+      </VBox>
+
+      <VBox alignment="CENTER">
+         <Label style="-fx-font-weight: bold;" text="Number of sexual cells:" />
+         <TextField fx:id="sexualCellsField" prefHeight="25.0" prefWidth="51.0" />
+      </VBox>
+
+      <VBox alignment="CENTER">
+         <Label style="-fx-font-weight: bold;" text="Number of asexual cells:" />
+         <TextField fx:id="asexualCellsField" prefHeight="25.0" prefWidth="51.0" />
+      </VBox>
+   </HBox>
+
+   <Region prefHeight="20.0" />
+
+   <Button fx:id="startGameButton" text="Create a new game" prefHeight="40.0" prefWidth="200.0" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-background-color: #4CAF50; -fx-text-fill: white;" />
+
 </VBox>
