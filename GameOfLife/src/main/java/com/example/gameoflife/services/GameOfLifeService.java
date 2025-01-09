@@ -54,6 +54,7 @@ public class GameOfLifeService {
     }
 
     public void resetGameOfLife() {
+        this.gameOfLife.stopGame();
         this.gameOfLife = null;
     }
 
