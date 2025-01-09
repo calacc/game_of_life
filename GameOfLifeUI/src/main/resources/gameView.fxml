@@ -11,8 +11,10 @@
       <!-- Pane for static content -->
       <Pane layoutY="276.0" prefHeight="124.0" prefWidth="600.0">
          <children>
-            <Button fx:id="pauseGameButton" layoutX="200.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Pause" onAction="#pauseGame" />
-            <Button fx:id="startGameButton" layoutX="300.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Start" onAction="#startGame" />
+            <Button fx:id="pauseGameButton" layoutX="150.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Pause" onAction="#pauseGame" />
+            <Button fx:id="startGameButton" layoutX="250.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Start" onAction="#startGame" />
+            <Button fx:id="closeGameButton" layoutX="350.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Close" onAction="#closeGame" />
+            <Button fx:id="saveGameButton"  layoutX="450.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Save" onAction="#saveGame" />
          </children>
       </Pane>
    </children>
